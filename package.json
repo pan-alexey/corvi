@@ -1,0 +1,28 @@
+{
+  "name": "corvi",
+  "version": "1.0.0",
+  "description": "Http client promise",
+  "main": "./dist/index.js",
+  "types": "./types/index.d.ts",
+  "scripts": {
+    "build": "webpack --mode development --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pan-alexey/corvi.git"
+  },
+  "author": "Pan Alexey <pan-alexey@live.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pan-alexey/corvi/issues"
+  },
+  "homepage": "https://github.com/pan-alexey/corvi#readme",
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "ts-loader": "^6.2.2",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  }
+}
