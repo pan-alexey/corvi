@@ -16,6 +16,5 @@ class Corvi implements ICorvi {
 const corvi = new Corvi()
 
 module.exports = corvi;
-module.exports.default = corvi;
 
 export default corvi;
