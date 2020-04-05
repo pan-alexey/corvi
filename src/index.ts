@@ -8,8 +8,9 @@ interface ICorvi {
 class Corvi implements ICorvi {
   version: string = '0.1'
 
-  get() {
-    return new Date()
+  get(word: string): string {
+    const date = new Date()
+    return word + date.toUTCString()
   }
 }
 

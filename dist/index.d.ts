@@ -3,7 +3,7 @@ interface ICorvi {
 }
 declare class Corvi implements ICorvi {
     version: string;
-    get(): Date;
+    get(word: string): string;
 }
 declare const corvi: Corvi;
 export default corvi;
