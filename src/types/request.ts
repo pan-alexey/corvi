@@ -1,4 +1,4 @@
-export interface RequestResult {
+export interface IRequest {
   ok: boolean;
   status: number;
   statusText: string;
