@@ -8,6 +8,12 @@ interface ICorvi {
 class Corvi implements ICorvi {
   version: string = '0.1'
 
+  private client: string | null = null;
+
+  constructor() {
+    this.client = typeof XMLHttpRequest !== 'undefined' ? 'browser' : 'http'
+  }
+
   get(word: string): string {
     const date = new Date()
     return word + date.toUTCString()
