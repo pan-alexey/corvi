@@ -1,7 +1,8 @@
 const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: {
     starter: path.resolve(__dirname, './src/index.ts'),
   },
@@ -15,8 +16,12 @@ module.exports = {
     path: path.resolve(__dirname, './dist/'),
     filename: 'index.js',
     libraryTarget: 'umd',
-    library: 'MyLib',
-    umdNamedDefine: true
+    library: 'corvi',
+    umdNamedDefine: true,
+    globalObject: 'this',
+  },
+  node: {
+    process: false
   },
   module: {
     rules: [
@@ -27,8 +32,9 @@ module.exports = {
       },
     ],
   },
-  devtool: 'source-map',
+  // devtool: 'source-map',
   plugins: [
+    new CleanWebpackPlugin(),
   ],
 };
 

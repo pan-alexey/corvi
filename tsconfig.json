@@ -1,18 +1,22 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
-    "noImplicitAny": true,
+    "strict": true,
     "removeComments": true,
+    "lib": [ "es2015", "dom" ],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "noImplicitAny": true,
     "preserveConstEnums": true,
     "sourceMap": true,
     "declaration": true,
-    "moduleResolution": "node",
-    "outDir": "./types",
+    "outDir": "./dist",
     "baseUrl": "./src",
     "paths": {
       "~/*": ["*"],
     },
   },
-  "exclude": ["node_modules", "**/__tests__/*"]
+  "exclude": ["node_modules", "**/__tests__/*", "dist"]
 }
