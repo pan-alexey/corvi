@@ -1,5 +1,9 @@
 interface ICorvi {
     version: string;
 }
-declare const corvi: ICorvi;
+declare class Corvi implements ICorvi {
+    version: string;
+    get(): Date;
+}
+declare const corvi: Corvi;
 export default corvi;

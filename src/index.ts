@@ -5,9 +5,15 @@ interface ICorvi {
   version: string
 }
 
-const corvi: ICorvi = {
-  version: '0.01.0',
+class Corvi implements ICorvi {
+  version: string = '0.1'
+
+  get() {
+    return new Date()
+  }
 }
+
+const corvi = new Corvi()
 
 module.exports = corvi;
 module.exports.default = corvi;
