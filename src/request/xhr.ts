@@ -2,9 +2,10 @@
 // var https = require('https');
 
 
-const request = (reject, resolve) => {
+const request = (options, reject, resolve) => {
   // error
   // errorResponse // for retry
+  console.log(options);
 
   const xhr = new XMLHttpRequest();
   reject();
