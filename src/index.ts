@@ -1,5 +1,13 @@
 // import http from '~/request/node.ts';
-// import xhr from '~/request/xhr.ts';
+import xhr from '~/request/xhr.ts';
+
+/*
+corvi.use() // like express syntax
+
+corvi.request.header
+corvi.request.timeout
+*/
+
 
 interface ICorvi {
   version: string;
@@ -8,10 +16,10 @@ interface ICorvi {
 class Corvi implements ICorvi {
   version = '0.1';
 
-  private client: string | null = null;
+  private client: Promise<string> | null = null;
 
   constructor() {
-    this.client = typeof XMLHttpRequest !== 'undefined' ? 'browser' : 'http';
+    this.client = typeof XMLHttpRequest !== 'undefined' ? xhr : xhr;
   }
 
   get(word: string,): string {
@@ -22,6 +30,7 @@ class Corvi implements ICorvi {
 
 const corvi = new Corvi();
 
-module.exports = corvi;
+// eslint-disable-next-line no-undef
+module.exports = corvi; // for js library
 
 export default corvi;

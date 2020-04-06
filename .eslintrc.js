@@ -4,9 +4,14 @@ module.exports =  {
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
+    "prettier/@typescript-eslint",
     'prettier',
-    'prettier/@typescript-eslint',
   ],
+	env: {
+		browser: true,
+    node: true,
+    es6: true
+	},
   parserOptions:  {
     ecmaVersion:  2018,  // Allows for the parsing of modern ECMAScript features
     sourceType:  'module',  // Allows for the use of imports
@@ -19,9 +24,9 @@ module.exports =  {
       }
     ],
     semi: ['warn', 'always'],
-    'comma-dangle': ['error', 'always'],
-    // 'no-undef': 'warn',
-    // 'no-unused-vars': 'warn',
+    'comma-dangle': ['warn', 'always'],
+    'no-undef': 'warn',
+    'no-unused-vars': 'warn',
     //'typescript/no-use-before-define': 'warn',
     //'typescript/no-unused-vars': 'warn',
   }
