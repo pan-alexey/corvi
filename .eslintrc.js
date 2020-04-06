@@ -24,7 +24,7 @@ module.exports =  {
       }
     ],
     semi: ['warn', 'always'],
-    'comma-dangle': ['warn', 'always'],
+    'comma-dangle': ['warn', 'always-multiline'],
     'no-undef': 'warn',
     'no-unused-vars': 'warn',
     //'typescript/no-use-before-define': 'warn',

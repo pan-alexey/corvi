@@ -16,10 +16,11 @@ interface ICorvi {
 class Corvi implements ICorvi {
   version = '0.1';
 
-  private client: Promise<string> | null = null;
+  private client: () => Promise<string>;
 
   constructor() {
-    this.client = typeof XMLHttpRequest !== 'undefined' ? xhr : xhr;
+    // const client = typeof XMLHttpRequest !== 'undefined' ? xhr : http;
+    this.client = xhr;
   }
 
   get(word: string,): string {
