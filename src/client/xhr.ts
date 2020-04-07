@@ -2,22 +2,19 @@
 // var https = require('https');
 
 
-const request = (options, reject, resolve) => {
-  // error
-  // errorResponse // for retry
-  console.log(options);
+// const request = (reject, resolve) => {
+//   // error
+//   // errorResponse // for retry
+//   const xhr = new XMLHttpRequest();
+//   reject();
+//   resolve();
 
-  const xhr = new XMLHttpRequest();
-  reject();
-  resolve();
-
-  xhr.send();
-};
+//   xhr.send();
+// };
 
 // import { IRequestResult, } from '~/types/request';
 const client = (): Promise<string> => {
   const promise = new Promise<string> ((resolve, reject) => {
-    request(resolve, reject);
 
     const timeout = setTimeout( () => {
       resolve('123');

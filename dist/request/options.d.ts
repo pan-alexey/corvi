@@ -1,7 +1,3 @@
 import { IOptions } from '~/types/request';
-
-const options: IOptions = {
-  method: 'GET',
-};
-
+declare const options: IOptions;
 export default options;

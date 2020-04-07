@@ -1,5 +1,9 @@
+import { IOptions } from '~/types/request';
+
+import options from '~/request/options';
+
 // import http from '~/request/node.ts';
-import xhr from '~/request/xhr.ts';
+import xhr from '~/client/xhr';
 
 /*
 corvi.use() // like express syntax
@@ -16,14 +20,18 @@ interface ICorvi {
 class Corvi implements ICorvi {
   version = '0.1';
 
+  private options: IOptions;
+
   private client: () => Promise<string>;
 
   constructor() {
+    this.options = options;
+
     // const client = typeof XMLHttpRequest !== 'undefined' ? xhr : http;
     this.client = xhr;
   }
 
-  get(word: string,): string {
+  get(word: string): string {
     const date = new Date();
     return word + date.toUTCString();
   }
