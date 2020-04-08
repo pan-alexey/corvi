@@ -1,5 +1,20 @@
 export interface IOptions {
   method: string;
+  url?: string;
+  headers?: {[key:string]: string};
+  params?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  timeout?: number;
+  isStatusOk?: (status: number) => boolean;
+  maxContentLength?: number;
+  maxBodyLength?: number;
+  maxRedirects?: number;
+
+  retry?: number;
+  preHook?: () => void;
+  postHook?: () => void;
+  maxSize?: number;
+  totalTimeout?: number;
+
   // url?: string;
   // maxResponseSize: number; // вызывает исключение если тело ответа больше заданного значение
   // // method?: Method;
@@ -25,7 +40,7 @@ export interface IOptions {
 
   // preHook?: () => void;
   // postHook?: () => void;
-  use?: (body: string) => string; // middleware
+  // use?: (body: string) => string; // middleware
   // socketPath?: string | null;
   // httpAgent?: any;
   // httpsAgent?: any;

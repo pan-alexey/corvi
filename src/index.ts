@@ -1,17 +1,7 @@
 import { IOptions } from '~/types/request';
 
 import options from '~/request/options';
-
-// import http from '~/request/node.ts';
 import xhr from '~/client/xhr';
-
-/*
-corvi.use() // like express syntax
-
-corvi.request.header
-corvi.request.timeout
-*/
-
 
 interface ICorvi {
   version: string;
@@ -22,7 +12,7 @@ class Corvi implements ICorvi {
 
   private options: IOptions;
 
-  private client: () => Promise<string>;
+  public client: (options: IOptions) => Promise<string>;
 
   constructor() {
     this.options = options;

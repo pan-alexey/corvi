@@ -1,10 +1,11 @@
+import { IOptions } from '~/types/request';
 interface ICorvi {
     version: string;
 }
 declare class Corvi implements ICorvi {
     version: string;
     private options;
-    private client;
+    client: (options: IOptions) => Promise<string>;
     constructor();
     get(word: string): string;
 }
