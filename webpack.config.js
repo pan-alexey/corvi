@@ -8,9 +8,6 @@ module.exports = {
     starter: path.resolve(__dirname, './src/index.ts'),
   },
   resolve: {
-    alias: {
-      '~' : path.resolve(__dirname, './src/'),
-    },
     extensions: ['.ts'],
   },
   output: {

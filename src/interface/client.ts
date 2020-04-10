@@ -1,4 +1,4 @@
-import { IOptions } from '~/interface/request';
+import { IOptions } from './request';
 
 export interface IClient {
   (options: IOptions): Promise<string>

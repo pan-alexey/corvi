@@ -1,8 +1,8 @@
-import { IOptions } from '~/interface/request';
-import { IClient } from '~/interface/client';
+import { IOptions } from '../interface/request';
+import { IClient } from '../interface/client';
 
 
-import options from '~/request/options';
+import options from '../request/options';
 
 
 interface ICore {

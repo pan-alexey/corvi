@@ -17,9 +17,6 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "baseUrl": "src",
-    "paths": {
-      "~/*": ["*"],
-    },
   },
   "include": [
     "src/**/*",

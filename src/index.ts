@@ -1,6 +1,6 @@
-import Core from '~/core/';
-import { IClient } from '~/interface/client';
-import xhr from '~/client/xhr';
+import Core from './core/';
+import { IClient } from './interface/client';
+import xhr from './client/xhr';
 
 class Corvi extends Core {
   constructor() {

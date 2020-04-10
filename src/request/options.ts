@@ -1,4 +1,4 @@
-import { IOptions } from '~/interface/request';
+import { IOptions } from '../interface/request';
 
 const options: IOptions = {
   method: 'GET',

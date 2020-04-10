@@ -1,4 +1,4 @@
-import { IClient } from '~/interface/client';
+import { IClient } from '../interface/client';
 interface ICore {
     version: string;
 }

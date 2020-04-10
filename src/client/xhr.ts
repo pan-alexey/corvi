@@ -1,4 +1,4 @@
-import { IOptions } from '~/interface/request';
+import { IOptions } from '../interface/request';
 
 const client = (options: IOptions): Promise<string> => {
   const promise = new Promise<string> ((resolve, reject) => {
