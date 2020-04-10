@@ -8,7 +8,6 @@
       "jest",
       "node",
     ],
-    "declaration": true,
     "strict": true,
     "removeComments": true,
     "lib": [ "es2015", "dom" ],
@@ -17,7 +16,6 @@
     "noImplicitAny": true,
     "preserveConstEnums": true,
     "sourceMap": true,
-    "outDir": "dist/types",
     "baseUrl": "src",
     "paths": {
       "~/*": ["*"],

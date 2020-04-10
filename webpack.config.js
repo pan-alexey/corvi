@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
@@ -36,6 +37,10 @@ module.exports = {
         loader: 'ts-loader',
         options: {
           configFile: 'tsconfig.build.json',
+          compilerOptions: {
+            declaration: true,
+            outDir: 'dist/types',
+          },
         },
       },
     ],

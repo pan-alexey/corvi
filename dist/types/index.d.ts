@@ -1,4 +1,4 @@
-import { IOptions } from '~/types/request';
+import { IOptions } from '~/interface/request';
 interface ICorvi {
     version: string;
 }
