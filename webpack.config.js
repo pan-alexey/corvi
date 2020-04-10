@@ -10,7 +10,7 @@ module.exports = {
     alias: {
       '~' : path.resolve(__dirname, './src/'),
     },
-    extensions: ['.ts'] 
+    extensions: ['.ts'],
   },
   output: {
     path: path.resolve(__dirname, './dist/'),
@@ -21,7 +21,7 @@ module.exports = {
     globalObject: 'this',
   },
   node: {
-    process: false
+    process: false,
   },
   module: {
     rules: [
