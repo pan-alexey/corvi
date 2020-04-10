@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Http client promise",
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/types/index.d.ts",
   "scripts": {
     "dev": "webpack --mode production --watch",
     "lint:fix": "eslint \"src/**/*.ts\" --quiet --fix"

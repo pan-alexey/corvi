@@ -1,29 +1,11 @@
-import { IOptions } from '~/interface/request';
-
-import options from '~/request/options';
+import Core from '~/core/';
+import { IClient } from '~/interface/client';
 import xhr from '~/client/xhr';
 
-interface ICorvi {
-  version: string;
-}
-
-class Corvi implements ICorvi {
-  version = '0.1';
-
-  private options: IOptions;
-
-  public client: (options: IOptions) => Promise<string>;
-
+class Corvi extends Core {
   constructor() {
-    this.options = options;
-
-    // const client = typeof XMLHttpRequest !== 'undefined' ? xhr : http;
-    this.client = xhr;
-  }
-
-  get(word: string): string {
-    const date = new Date();
-    return word + date.toUTCString();
+    const client:IClient = typeof XMLHttpRequest !== 'undefined' ? xhr : xhr;
+    super(client);
   }
 }
 
