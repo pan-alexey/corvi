@@ -17,7 +17,6 @@ module.exports = {
     filename: 'index.js',
     libraryTarget: 'umd',
     library: 'corvi',
-    // umdNamedDefine: true,
     globalObject: 'this',
   },
   node: {
