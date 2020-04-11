@@ -1,3 +1,6 @@
-import corvi from '~/index';
+import corvi from '../src/index';
 
-console.log(corvi);
+test("simple test", () =>{
+  expect(2+2).toBe(4);
+  expect(corvi.version).toBe('0.1');
+});

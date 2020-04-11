@@ -6,7 +6,8 @@
   "types": "./dist/types/index.d.ts",
   "scripts": {
     "dev": "webpack --mode production --watch",
-    "lint:fix": "eslint \"src/**/*.ts\" --quiet --fix"
+    "lint:fix": "eslint \"src/**/*.ts\" --quiet --fix",
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -20,8 +21,9 @@
   "homepage": "https://github.com/pan-alexey/corvi#readme",
   "devDependencies": {
     "@types/jest": "^25.2.1",
-    "@typescript-eslint/eslint-plugin": "^2.26.0",
-    "@typescript-eslint/parser": "^2.26.0",
+    "@types/node": "^13.11.1",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
     "awesome-typescript-loader": "^5.2.1",
     "clean-webpack-plugin": "^3.0.0",
     "eslint": "^6.8.0",
@@ -30,6 +32,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "jest": "^25.3.0",
     "prettier": "^1.19.1",
+    "ts-jest": "^25.3.1",
     "ts-loader": "^6.2.2",
     "typescript": "^3.8.3",
     "webpack": "^4.42.1",
