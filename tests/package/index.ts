@@ -1,3 +1,11 @@
 import corvi from 'corvi';
 
-console.log(corvi.version);
+(async function ():Promise<null> {
+  const a: string = await corvi.client({
+    method: 'get',
+  });
+  console.log(a);
+
+  return null;
+})();
+

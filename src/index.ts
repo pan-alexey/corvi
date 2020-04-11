@@ -1,5 +1,5 @@
 import Core from './core/';
-import { IClient } from './interface/client';
+import { IClient } from './interface';
 import xhr from './client/xhr';
 
 class Corvi extends Core {

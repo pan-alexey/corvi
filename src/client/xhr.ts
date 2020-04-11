@@ -1,12 +1,13 @@
-import { IOptions } from '../interface/request';
+import { IOptions } from '../interface';
 
 const client = (options: IOptions): Promise<string> => {
   const promise = new Promise<string> ((resolve, reject) => {
-    console.log(options);
 
     setTimeout(()=>{
       reject();
     }, 100);
+
+    console.log(options);
     resolve('123');
   });
   return promise;

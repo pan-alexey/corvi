@@ -1,12 +1,16 @@
-import { IOptions } from '../interface/request';
-import { IClient } from '../interface/client';
+// import { IOptions } from '../interface/request';
+// import { IClient } from '../interface/client';
+import {
+  IOptions,
+  IClient,
+} from '../interface';
 
-
-import options from '../request/options';
+import options from './options';
 
 
 interface ICore {
   version: string;
+  // client: IClient;
 }
 
 class Core implements ICore {
@@ -14,11 +18,16 @@ class Core implements ICore {
 
   private options: IOptions;
 
-  public client: IClient;
+  private _client: IClient;
 
   constructor(client: IClient) {
     this.options = options;
-    this.client = client;
+    this._client = client;
+  }
+
+  client(options:IOptions): Promise<string> {
+    const _options: IOptions = Object.assign({},options,this.options);
+    return this._client(_options);
   }
 
   get(word: string): string {
