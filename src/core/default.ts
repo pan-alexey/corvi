@@ -1,6 +1,6 @@
 const defaultOptions = {
   method: 'GET',
-  retry: 1,
+  retries: 1,
   timeout: 5000,
   requestIimeout: 5000,
 };
