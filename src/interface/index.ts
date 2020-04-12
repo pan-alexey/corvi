@@ -1,7 +1,9 @@
 export interface IOptions {
   method: string;
+  url: string;
   retry?: number;
   timeout?: number;
+  requestIimeout?: number;
 }
 
 export interface IResult {

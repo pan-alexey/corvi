@@ -1,15 +1,27 @@
 import { IOptions } from '../interface';
+import defaultOptions from '../core/default';
 
-const client = (options: IOptions): Promise<string> => {
+const client = (requestOptions: IOptions): Promise<string> => {
+  const options = Object.assign({}, defaultOptions, requestOptions);
+
   const promise = new Promise<string> ((resolve, reject) => {
-
     setTimeout(()=>{
-      reject();
-    }, 100);
+      reject('Request timeout');
+    }, options.timeout);
 
-    console.log(options);
-    resolve('123');
+    const xhr:XMLHttpRequest = new XMLHttpRequest();
+    xhr.timeout = options.requestIimeout;
+    xhr.ontimeout = (): null => {
+      resolve('Request took longer than expected.');
+      return null;
+    };
+
+    xhr.open(options.method, options.url);
+    xhr.send();
   });
+
+
+
   return promise;
 };
 
