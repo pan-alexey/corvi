@@ -1,18 +1,3 @@
-// /* eslint-disable @typescript-eslint/no-explicit-any */
-// export const promiseTimeout: (ms: number, promise: Promise<any>) => Promise<any>= function(ms, promise){
-//   const timeout = new Promise((resolve, reject) => {
-//     const timer = setTimeout(() => {
-//       clearTimeout(timer);
-//       reject('Timed out in '+ ms + 'ms.');
-//     }, ms);
-//   });
-
-//   return Promise.race([
-//     promise,
-//     timeout,
-//   ]);
-// };
-
 export const PromiseSleep: (timeout: number) => Promise<number> = (timeout = 0) => {
   return new Promise((resolve)=>{
     setTimeout(()=>{
@@ -30,8 +15,27 @@ export const PromiseRetry:
       if (--attempt > 0) {
         PromiseRetry(promise, attempt).then(resolve);
       } else {
-        reject('max attempt');
+        reject(new Error(`Max attempts`));
       }
     });
   });
+};
+
+export const promiseTimeout:
+<T>(promise: () => Promise<T>, ms:number) => Promise<T> = <T>(promise: () => Promise<T>, ms: number) => { 
+  let timer: ReturnType<typeof setTimeout> ;
+
+  const timeout = new Promise<never>((resolve, reject)=>{
+    timer = setTimeout(()=> {
+      reject(new Error(`Timeout: ${ms}ms`));
+    },ms);
+  });
+
+  return Promise.race([ 
+    promise(), 
+    timeout, 
+  ]).then((result) => {
+    clearTimeout(timer);
+    return result;
+  }); 
 };
