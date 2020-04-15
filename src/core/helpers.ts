@@ -1,4 +1,4 @@
-export const PromiseSleep: (timeout: number) => Promise<number> = (timeout = 0) => {
+export const PromiseSleep: (timeout: number) => Promise<unknown> = (timeout = 0) => {
   return new Promise((resolve)=>{
     setTimeout(()=>{
       resolve(timeout);
@@ -11,15 +11,16 @@ export const PromiseRetry:
 <T>(promise: () => Promise<T>, attempt = 4) => {
   return new Promise<T>((resolve, reject) => {
     promise().then(resolve)
-    .catch(() => {
+    .catch((err) => {
       if (--attempt > 0) {
         PromiseRetry(promise, attempt).then(resolve);
       } else {
-        reject(new Error(`Max attempts`));
+        reject(err);
       }
     });
   });
 };
+
 
 export const promiseTimeout:
 <T>(promise: () => Promise<T>, ms:number) => Promise<T> = <T>(promise: () => Promise<T>, ms: number) => { 

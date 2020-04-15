@@ -1,4 +1,4 @@
-import corvi from '../src/index';
+import corvi from '../../src/index';
 
 test("simple test", () =>{
   expect(2+2).toBe(4);
