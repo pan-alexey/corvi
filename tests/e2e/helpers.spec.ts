@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { PromiseSleep, PromiseRetry, PromiseTimeout} from '../../src/core/helpers';
+import { PromiseSleep, PromiseRetry, PromiseTimeout} from '../../src/core/helpers/promise';
 
 class HandlerWidthThrow {
   private counter: number;
