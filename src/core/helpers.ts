@@ -1,4 +1,4 @@
-export const PromiseSleep: (timeout: number) => Promise<unknown> = (timeout = 0) => {
+export const PromiseSleep: (timeout: number) => Promise<unknown> = (timeout) => {
   return new Promise((resolve)=>{
     setTimeout(()=>{
       resolve(timeout);
@@ -6,37 +6,33 @@ export const PromiseSleep: (timeout: number) => Promise<unknown> = (timeout = 0)
   });
 };
 
-export const PromiseRetry: 
-<T>(promise: () => Promise<T>, attempt:number) => Promise<T> = 
-<T>(promise: () => Promise<T>, attempt = 4) => {
+export const PromiseRetry:
+  <T>(promise: () => Promise<T>, attempt: number, rejectCallback?: (e: unknown) => void) => Promise<T> =
+  <T>(promise: () => Promise<T>, attempt: number, rejectCallback?: (e: unknown) => void) => {
+    return new Promise<T>((resolve, reject) => {
+      promise().then(resolve)
+        .catch((err) => {
+          if (rejectCallback) {
+            rejectCallback(err);
+          }
+          if (--attempt > 0) {
+            PromiseRetry(promise, attempt, rejectCallback).then(resolve);
+          } else {
+            reject(err);
+          }
+        });
+    });
+  };
+
+export const PromiseTimeout:
+<T>(promise: () => Promise<T>, ms:number) => Promise<T> = <T>(promise: () => Promise<T>, ms: number) => {
   return new Promise<T>((resolve, reject) => {
+    setTimeout(() => {
+      reject(new Error(`Promise Timeout: ${ms}ms`));
+    }, ms);
     promise().then(resolve)
-    .catch((err) => {
-      if (--attempt > 0) {
-        PromiseRetry(promise, attempt).then(resolve);
-      } else {
-        reject(err);
-      }
+    .catch((err)=>{
+      reject(err);
     });
   });
-};
-
-
-export const promiseTimeout:
-<T>(promise: () => Promise<T>, ms:number) => Promise<T> = <T>(promise: () => Promise<T>, ms: number) => { 
-  let timer: ReturnType<typeof setTimeout> ;
-
-  const timeout = new Promise<never>((resolve, reject)=>{
-    timer = setTimeout(()=> {
-      reject(new Error(`Timeout: ${ms}ms`));
-    },ms);
-  });
-
-  return Promise.race([ 
-    promise(), 
-    timeout, 
-  ]).then((result) => {
-    clearTimeout(timer);
-    return result;
-  }); 
 };

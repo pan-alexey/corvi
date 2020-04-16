@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { PromiseSleep, PromiseRetry} from '../../src/core/helpers';
+import { PromiseSleep, PromiseRetry, PromiseTimeout} from '../../src/core/helpers';
 
 class HandlerWidthThrow {
   private counter: number;
@@ -9,10 +9,10 @@ class HandlerWidthThrow {
   }
 
   call(): Promise<string> {
-    --this.counter;
      return new Promise((resolve, reject)=>{
       if (this.counter>0) {
-        reject(new Error('reject'));
+        reject(new Error(`reject ${this.counter}`));
+        this.counter = this.counter - 1;
       } else {
         resolve('ok');
       }
@@ -35,9 +35,45 @@ describe('Helper', () => {
     const handler = new HandlerWidthThrow(5);
     await expect(PromiseRetry(()=>handler.call(), 1)).rejects.toThrowError('reject');;
   });
-  
+
   it('retry[resolve]', async () => {
     const handler = new HandlerWidthThrow(5);
-    await expect(PromiseRetry(()=>handler.call(), 5)).resolves.toBe('ok');;
+    await expect(PromiseRetry(()=>handler.call(), 6)).resolves.toBe('ok');;
   });
+
+  it('retry[rejects callback]', async () => {
+    const mockCallback = jest.fn();
+    const handler = new HandlerWidthThrow(5);
+    await expect(PromiseRetry(()=>handler.call(), 6, mockCallback)).resolves.toBe('ok');;
+    expect(mockCallback.mock.calls.length).toBe(5);
+  });
+
+  it('timeout [resolve ]', async () => {
+    await expect(PromiseTimeout(() => {
+      return new Promise((resolve) => {
+        setTimeout(()=>{
+          resolve('ok');
+        }, 500);
+      });
+    }, 1000)).resolves.toBe('ok');;
+  });
+
+  it('timeout [rejects timeout]', async () => {
+    await expect(PromiseTimeout(() => {
+      return new Promise((resolve) => {
+        setTimeout(()=>{
+          resolve('ok');
+        }, 1500);
+      });
+    }, 1000)).rejects.toThrowError('Timeout: 1000ms');;
+  });
+
+  it('timeout [rejects timeout]', async () => {
+    await expect(PromiseTimeout(() => {
+      return new Promise((resolve, reject) => {
+        reject(new Error('reject'));
+      });
+    }, 1000)).rejects.toThrowError('reject');;
+  });
+
 });
