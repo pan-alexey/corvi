@@ -1,0 +1,46 @@
+{
+  "name": "corvi",
+  "version": "1.0.0",
+  "description": "Http client promise",
+  "main": "./dist/index.js",
+  "types": "./dist/types/index.d.ts",
+  "scripts": {
+    "build": "babel dist --out-file dist/legacy.js",
+    "dev": "webpack",
+    "lint:fix": "eslint \"src/**/*.ts\" --quiet --fix",
+    "test": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pan-alexey/corvi.git"
+  },
+  "author": "Pan Alexey <pan-alexey@live.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pan-alexey/corvi/issues"
+  },
+  "homepage": "https://github.com/pan-alexey/corvi#readme",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.9.5",
+    "@types/jest": "^25.2.1",
+    "@types/node": "^13.11.1",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-loader": "^4.0.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "jest": "^25.3.0",
+    "prettier": "^1.19.1",
+    "ts-jest": "^25.3.1",
+    "ts-loader": "^6.2.2",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,16 @@
+{
+  "name": "package-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "js": "node index.js",
+    "ts": "ts-node index.ts"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ts-node": "^8.8.2",
+    "corvi": "file:../../"
+  }
+}

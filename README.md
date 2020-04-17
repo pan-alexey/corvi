@@ -1,2 +1,7 @@
 # corvi
-Http client promise
+http client width
+
+concurency mode
+timeout
+paralell
+middleware
