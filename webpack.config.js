@@ -3,9 +3,12 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  mode: 'production',
+  mode: 'production',//'development',
   entry: {
-    starter: path.resolve(__dirname, './src/index.ts'),
+    starter: [
+      "@babel/polyfill",
+      path.resolve(__dirname, './src/index.ts'),
+    ],
   },
   resolve: {
     extensions: ['.ts'],
@@ -23,22 +26,29 @@ module.exports = {
   module: {
     rules: [
       {
-        enforce: 'pre',
         test: /\.ts$/,
-        exclude: /node_modules/,
-        loader: 'eslint-loader',
-      },
-      {
-        test: /\.ts$/,
-        exclude: [/node_modules/],
-        loader: 'ts-loader',
-        options: {
-          configFile: 'tsconfig.build.json',
-          compilerOptions: {
-            declaration: true,
-            outDir: 'dist/types',
+        use: [
+          // ts-loader
+          //-------------------------//
+          { 
+            loader: 'babel-loader',
           },
-        },
+          //-------------------------//
+          { 
+            loader: 'ts-loader',
+            options: {
+              configFile: 'tsconfig.build.json',
+              compilerOptions: {
+                declaration: true,
+                outDir: 'dist/types',
+              },
+            },
+          },
+          //-------------------------//
+          {
+            loader: 'eslint-loader',
+          },
+        ],
       },
     ],
   },
