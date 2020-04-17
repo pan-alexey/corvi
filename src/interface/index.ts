@@ -1,7 +1,7 @@
 export interface IOptions {
   method: string;
   url: string;
-  retry?: number;
+  attemps?: number;
   timeout?: number;
   requestIimeout?: number;
 }
@@ -16,5 +16,5 @@ export interface IResult {
 }
 
 export interface IClient {
-  (options: IOptions): Promise<string>
+  (options: IOptions, defaultOptions: IOptions): Promise<string>
 }

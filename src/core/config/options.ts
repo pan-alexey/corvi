@@ -1,6 +1,9 @@
-const options = {
+import { IOptions } from '../../interface';
+
+const options: IOptions = {
+  url: '/',
   method: 'GET',
-  retries: 1,
+  attemps: 1,
   timeout: 5000,
   requestIimeout: 5000,
 };

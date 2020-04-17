@@ -6,7 +6,6 @@ module.exports = {
   mode: 'production',//'development',
   entry: {
     starter: [
-      "@babel/polyfill",
       path.resolve(__dirname, './src/index.ts'),
     ],
   },
@@ -28,12 +27,11 @@ module.exports = {
       {
         test: /\.ts$/,
         use: [
-          // ts-loader
-          //-------------------------//
+          //------- babel ----------//
           { 
             loader: 'babel-loader',
           },
-          //-------------------------//
+          //----- typescript --------//
           { 
             loader: 'ts-loader',
             options: {
@@ -48,6 +46,7 @@ module.exports = {
           {
             loader: 'eslint-loader',
           },
+          //-------------------------//
         ],
       },
     ],
