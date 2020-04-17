@@ -19,9 +19,6 @@ class Core implements ICore {
     this._client = client;
   }
 
-  assign():unknown {
-    return Object.assign({}, {key:'key'}, {value:'value'});
-  }
   client(options:IOptions): Promise<string> {
     return this._client(options, Object.assign({}, configOptions));
   }
