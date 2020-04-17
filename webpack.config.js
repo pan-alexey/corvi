@@ -5,12 +5,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
   mode: 'production',//'development',
   entry: {
-    starter: [
+    main: [
       path.resolve(__dirname, './src/index.ts'),
     ],
   },
   resolve: {
-    extensions: ['.ts'],
+    extensions: ['.ts', '.js'],
   },
   output: {
     path: path.resolve(__dirname, './dist/'),
@@ -28,9 +28,9 @@ module.exports = {
         test: /\.ts$/,
         use: [
           //------- babel ----------//
-          { 
-            loader: 'babel-loader',
-          },
+          // { 
+          //   loader: 'babel-loader',
+          // },
           //----- typescript --------//
           { 
             loader: 'ts-loader',
