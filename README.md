@@ -1,7 +1,11 @@
 # corvi
-http client width
+http client like promise 
 
-concurency mode
+Client with:
+retry
 timeout
+
+Builder with:
+series
 paralell
-middleware
+competing
