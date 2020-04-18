@@ -9,7 +9,10 @@
 </body>
 <script src="../../dist/index.js"></script>
 <script>
-  console.log(corvi.version)
-  console.log(corvi.assign());
+(async function (){
+  const result = await corvi.client({method: 'GET', url: 'https://node.vxv.me'});
+
+  console.log(result);
+})();
 </script>
 </html>

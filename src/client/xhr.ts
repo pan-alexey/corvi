@@ -1,9 +1,9 @@
 import { IOptions } from '../interface';
 
-const client = (requestOptions: IOptions): Promise<string> => {
-  const options = Object.assign({}, requestOptions);
+const client = (options: IOptions): Promise<string> => {
+  console.log(options);
 
-  const promise = new Promise<string> ((resolve, reject) => {
+  return new Promise<string> ((resolve, reject) => {
     setTimeout(()=>{
       reject('Request timeout');
     }, options.timeout);
@@ -15,13 +15,21 @@ const client = (requestOptions: IOptions): Promise<string> => {
       return null;
     };
 
+    xhr.onload = (): void =>{
+      resolve(xhr.responseText);
+    };
+
+    // = () => {
+    //   const result = {
+    //     headers: xhr.getAllResponseHeaders(),
+    //     data: xhr.responseText,
+    //   };
+    // };
+
+
     xhr.open(options.method, options.url);
     xhr.send();
   });
-
-
-
-  return promise;
 };
 
 export default client;

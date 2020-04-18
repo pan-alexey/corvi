@@ -1,3 +1,3 @@
 import { IOptions } from '../interface';
-declare const client: (requestOptions: IOptions) => Promise<string>;
+declare const client: (options: IOptions) => Promise<string>;
 export default client;

@@ -16,5 +16,5 @@ export interface IResult {
 }
 
 export interface IClient {
-  (options: IOptions, defaultOptions: IOptions): Promise<string>
+  (options: IOptions): Promise<string>
 }

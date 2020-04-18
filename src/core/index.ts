@@ -3,7 +3,7 @@ import {
   IClient,
 } from '../interface';
 
-import configOptions from './config/options';
+import _options from './config/options';
 
 interface ICore {
   version: string;
@@ -20,12 +20,7 @@ class Core implements ICore {
   }
 
   client(options:IOptions): Promise<string> {
-    return this._client(options, Object.assign({}, configOptions));
-  }
-
-  get(word: string): string {
-    const date = new Date();
-    return word + date.toUTCString();
+    return this._client(Object.assign({}, _options, options));
   }
 }
 export default Core;

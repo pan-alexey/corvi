@@ -14,5 +14,5 @@ export interface IResult {
     headers?: string;
 }
 export interface IClient {
-    (options: IOptions, defaultOptions: IOptions): Promise<string>;
+    (options: IOptions): Promise<string>;
 }
