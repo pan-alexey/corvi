@@ -4,7 +4,7 @@ const client = (options: IOptions): Promise<string> => {
   console.log(options);
 
   return new Promise<string> ((resolve, reject) => {
-    setTimeout(()=>{
+    const timeout: number = setTimeout(()=>{
       reject('Request timeout');
     }, options.timeout);
 
@@ -16,6 +16,7 @@ const client = (options: IOptions): Promise<string> => {
     };
 
     xhr.onload = (): void =>{
+      clearTimeout(timeout);
       resolve(xhr.responseText);
     };
 

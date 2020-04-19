@@ -5,7 +5,8 @@ import https from "https";
 
 const client = (options: IOptions): Promise<string> => {
   return new Promise<string> ((resolve, reject) => {
-    setTimeout(()=>{
+
+    const timeout: number = setTimeout(()=>{
       reject('Request timeout');
     }, options.timeout);
 
@@ -31,6 +32,7 @@ const client = (options: IOptions): Promise<string> => {
       });
     
       res.on('end', () => {
+        clearTimeout(timeout);
         resolve(data);
       });
     });
