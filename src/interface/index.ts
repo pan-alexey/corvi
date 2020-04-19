@@ -4,15 +4,16 @@ export interface IOptions {
   attemps?: number;
   timeout?: number;
   requestIimeout?: number;
+  json?: <T>() => T; // default parser;
 }
 
 export interface IResult {
-  ok?: boolean;
-  status?: number;
-  statusText?: string;
-  data?: string;
-  json?: <T>() => T;
-  headers?: string;
+  ok: boolean;
+  status: number;
+  statusText: string;
+  data: string;
+  headers: string;
+  elapsed: number;
 }
 
 export interface IClient {

@@ -1,13 +1,7 @@
 import { IOptions } from '../interface';
 
 const client = (options: IOptions): Promise<string> => {
-  console.log(options);
-
   return new Promise<string> ((resolve, reject) => {
-    const timeout: number = setTimeout(()=>{
-      reject('Request timeout');
-    }, options.timeout);
-
     const xhr:XMLHttpRequest = new XMLHttpRequest();
 
     xhr.ontimeout = (): null => {
@@ -16,8 +10,19 @@ const client = (options: IOptions): Promise<string> => {
     };
 
     xhr.onload = (): void =>{
-      clearTimeout(timeout);
       resolve(xhr.responseText);
+    };
+
+    xhr.onreadystatechange = (): void => {
+      if (xhr.readyState == 4 && xhr.status !== 200) {
+        reject(xhr);
+      }
+    };
+
+    // xhr.abort();
+
+    xhr.onerror = (e): void => {
+      reject(e);
     };
 
     xhr.open(options.method, options.url);
