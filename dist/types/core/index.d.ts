@@ -6,6 +6,7 @@ interface ICore {
 declare class Core implements ICore {
     version: string;
     private _client;
+    options: IOptions;
     constructor(client: IClient);
     client(options: IOptions): Promise<string>;
 }

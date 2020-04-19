@@ -6,7 +6,7 @@
   "types": "./dist/types/index.d.ts",
   "scripts": {
     "build": "babel dist --out-file dist/legacy.js",
-    "dev": "webpack",
+    "dev": "webpack --watch",
     "lint:fix": "eslint \"src/**/*.ts\" --quiet --fix",
     "test": "jest --coverage"
   },

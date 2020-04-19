@@ -1,14 +1,42 @@
-// var http = require('http');
-// var https = require('https');
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { IOptions } from '../interface';
+import https from "https";
+//const https = require('https');
 
-const request = (): string => {
-  // console.log('http');
-  return 'node';
-  // var request = new XMLHttpRequest();
+const client = (options: IOptions): Promise<string> => {
+  return new Promise<string> ((resolve, reject) => {
+    setTimeout(()=>{
+      reject('Request timeout');
+    }, options.timeout);
 
-  // request.open('GET', 'https://node.vxv.me');
+    let data = '';
 
-  // request.send();
+    const _options = {
+      href: 'https://node.vxv.me/',
+      origin: 'https://node.vxv.me',
+      protocol: 'https:',
+      username: '',
+      password: '',
+      host: 'node.vxv.me',
+      hostname: 'node.vxv.me',
+      port: '',
+      pathname: '/',
+      search: '',
+      hash: '',
+    };
+    
+    const req = https.request(_options, (res:any) => {
+      res.on('data', (chunk: string) => {
+        data += chunk;
+      });
+    
+      res.on('end', () => {
+        resolve(data);
+      });
+    });
+    
+    req.end();
+  });
 };
 
-export default request;
+export default client;

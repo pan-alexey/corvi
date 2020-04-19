@@ -9,6 +9,10 @@ module.exports = {
       path.resolve(__dirname, './src/index.ts'),
     ],
   },
+  externals:{
+    http: 'http',
+    https: 'https',
+  },
   resolve: {
     extensions: ['.ts', '.js'],
   },
@@ -26,6 +30,7 @@ module.exports = {
     rules: [
       {
         test: /\.ts$/,
+        exclude: /node_modules/,
         use: [
           //------- babel ----------//
           // { 

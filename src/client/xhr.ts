@@ -19,14 +19,6 @@ const client = (options: IOptions): Promise<string> => {
       resolve(xhr.responseText);
     };
 
-    // = () => {
-    //   const result = {
-    //     headers: xhr.getAllResponseHeaders(),
-    //     data: xhr.responseText,
-    //   };
-    // };
-
-
     xhr.open(options.method, options.url);
     xhr.send();
   });

@@ -1,10 +1,10 @@
 import Core from './core/';
 import { IClient } from './interface';
-import xhr from './client/xhr';
 import node from './client/node';
+
 class Corvi extends Core {
   constructor() {
-    const client:IClient = typeof XMLHttpRequest !== 'undefined' ? xhr : node;
+    const client:IClient = node;
     super(client);
   }
 }
