@@ -22,7 +22,7 @@ class Core implements ICore {
     url: '/',
     method: 'GET',
     attemps: 1000,
-    timeout: 500,
+    timeout: 1000,
   };
 
   constructor(client: IClient) {
@@ -31,14 +31,16 @@ class Core implements ICore {
 
   client(options:IOptions): Promise<string> {
     const _options = Object.assign({}, this.options, options);
-    const timeout: number = _options.timeout || 0;
     const attemps: number = _options.attemps || 0;
+    const promiseTimeout: number = _options.promiseTimeout || 0;
 
-    return PromiseRetry(()=>{
-      return PromiseTimeout( () => {
-        return this._client(_options);
-      }, timeout);
-    }, attemps);
+    const client = attemps > 0 ? PromiseRetry( () => {
+      return this._client(_options);
+    }, attemps) : this._client(_options);;
+
+    return promiseTimeout ? PromiseTimeout (()=>{
+      return client;
+    }, promiseTimeout) : client;
   }
 }
 

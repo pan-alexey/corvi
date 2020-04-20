@@ -3,7 +3,7 @@ export interface IOptions {
   url: string;
   attemps?: number;
   timeout?: number;
-  requestIimeout?: number;
+  promiseTimeout?: number;
   json?: <T>() => T; // default parser;
 }
 
