@@ -2,6 +2,7 @@
 // builder.paralell // analog allSettled
 // builder.race
 // builder.all
+// builder.failover
 
 // builder.series
 // builder.task
