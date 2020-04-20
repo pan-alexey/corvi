@@ -3,7 +3,12 @@ module.exports = {
     '<rootDir>/src',
     '<rootDir>/tests/e2e',
   ],
-  modulePathIgnorePatterns: ["<rootDir>/tests/package"],
+  modulePathIgnorePatterns: [
+    "<rootDir>/tests/package",
+    '<rootDir>/tests/e2e/server',
+    '<rootDir>/tests/e2e/classes',
+    '<rootDir>/tests/e2e/helpers',
+  ],
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },

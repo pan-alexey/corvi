@@ -1,24 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PromiseSleep, PromiseRetry, PromiseTimeout} from '../../src/core/helpers/promise';
-
-class HandlerWidthThrow {
-  private counter: number;
-
-  constructor(count: number) {
-    this.counter = count;
-  }
-
-  call(): Promise<string> {
-     return new Promise((resolve, reject)=>{
-      if (this.counter>0) {
-        reject(new Error(`reject ${this.counter}`));
-        this.counter = this.counter - 1;
-      } else {
-        resolve('ok');
-      }
-     });
-  }
-}
+import HandlerWidthThrow from './helpers/throw';
 
 describe('Helper', () => {
   it('sleep', async() => {
