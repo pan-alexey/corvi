@@ -32,15 +32,15 @@ class Core implements ICore {
   client(options:IOptions): Promise<string> {
     const _options = Object.assign({}, this.options, options);
     const attemps: number = _options.attemps || 0;
-    const promiseTimeout: number = _options.promiseTimeout || 0;
+    const clientTimeout: number = _options.clientTimeout || 0;
 
     const client = attemps > 0 ? PromiseRetry( () => {
       return this._client(_options);
     }, attemps) : this._client(_options);;
 
-    return promiseTimeout ? PromiseTimeout (()=>{
+    return clientTimeout ? PromiseTimeout (()=>{
       return client;
-    }, promiseTimeout) : client;
+    }, clientTimeout) : client;
   }
 }
 
