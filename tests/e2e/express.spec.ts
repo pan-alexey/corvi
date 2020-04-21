@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import app from './server/express';
+import app from './mock/express';
 
 describe("Test the root path", () => {
   test("It should response the GET method", async () => {

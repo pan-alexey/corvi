@@ -6,8 +6,7 @@ module.exports = {
   modulePathIgnorePatterns: [
     "<rootDir>/tests/package",
     '<rootDir>/tests/e2e/server',
-    '<rootDir>/tests/e2e/classes',
-    '<rootDir>/tests/e2e/helpers',
+    'mock',
   ],
   transform: {
     '^.+\\.tsx?$': 'ts-jest',

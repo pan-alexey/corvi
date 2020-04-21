@@ -1,15 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { IOptions } from '../interface';
 import https from "https";
+import { ClientRequest } from 'http';
 //const https = require('https');
 
 const client = (options: IOptions): Promise<string> => {
   return new Promise<string> ((resolve, reject) => {
-
-    const timeout: number = setTimeout(()=>{
-      reject('Request timeout');
-    }, options.timeout);
-
     let data = '';
 
     const _options = {
@@ -26,7 +22,12 @@ const client = (options: IOptions): Promise<string> => {
       hash: '',
     };
     
-    const req = https.request(_options, (res:any) => {
+    const req: ClientRequest = https.request(_options, (res:any) => {
+      const timeout: number = setTimeout(()=>{
+        req.abort();
+        reject('Request timeout');
+      }, options.timeout);
+
       res.on('data', (chunk: string) => {
         data += chunk;
       });

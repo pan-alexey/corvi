@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PromiseSleep, PromiseRetry, PromiseTimeout} from '../../src/core/helpers/promise';
-import HandlerWidthThrow from './helpers/throw';
+import HandlerWidthThrow from './mock/throw';
 
 describe('Helper', () => {
   it('sleep', async() => {
@@ -10,7 +10,7 @@ describe('Helper', () => {
     const end:number = new Date().valueOf();
 
     expect(timeout).toBe(result);
-    expect( (end - start) > 1000).toBe(true);
+    expect( (end - start) >= 1000).toBe(true);
   });
 
   it('retry[rejects]', async () => {
