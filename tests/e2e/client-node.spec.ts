@@ -1,15 +1,18 @@
-import xhr from '../../src/client/xhr';
 import app from './mock/express';
 import http from 'http';
 import getPort from 'get-port';
 
+import node from '../../src/client/node';
+
 describe("XHR", () => {
   let server : http.Server;
   let port: number;
+  let url: string;
 
   beforeAll(async (done) => {
     port = await getPort();
     server = http.createServer(app);
+    url = `http://localhost:${port}`;
     server.listen(port, done);
   });
 
@@ -18,10 +21,8 @@ describe("XHR", () => {
   });
 
   test("It should response the GET method", async () => {
-    console.log(`http://localhost:${port}/`);
-    const url = `http://localhost:${port}/`;
-    const result = await xhr({method: 'GET', url});
+    const result = await node({method: 'GET', url: `${url}/`});
 
-    expect(400).toBe(400);
+    expect(result).toBe('/root/');
   });
 });
