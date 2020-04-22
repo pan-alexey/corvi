@@ -3,29 +3,34 @@ import { IOptions } from '../interface';
 const client = (options: IOptions): Promise<string> => {
   return new Promise<string> ((resolve, reject) => {
     const xhr:XMLHttpRequest = new XMLHttpRequest();
+    let timeout: number;
 
-    xhr.timeout = options.timeout || 120000; // 120000 is a default timeout
+    if (options.timeout) {
+      setTimeout(()=>{
+        reject(new Error(`Common timeout: ${options.timeout}ms`));
+        xhr.abort();
+      }, options.timeout);
+    }
 
-    xhr.ontimeout = (): null => {
-      resolve('Request took longer than expected.');
-      return null;
+    // Default timeout in chrome is 120000 (divide by 2)
+    xhr.timeout = Math.max( options.timeout|| 0, 120000/2);
+    xhr.ontimeout = (): void => {
+      clearTimeout(timeout);
+      reject(new Error(`Client timeout: ${xhr.timeout}ms`));
     };
 
-    xhr.onload = (): void =>{
+    xhr.onload = (): void => {
+      clearTimeout(timeout);
       resolve(xhr.responseText);
     };
 
-    xhr.onreadystatechange = (): void => {
-      if (xhr.readyState == 4 && xhr.status !== 200) {
-        reject(xhr);
-      }
-    };
-
-    // xhr.abort();
-
-    xhr.onerror = (e): void => {
-      reject(e);
-    };
+    // reject for http request
+    // xhr.onreadystatechange = (): void => {
+    //   clearTimeout(timeout);
+    //   if (xhr.readyState == 4 && xhr.status !== 200) {
+    //     reject(new Error(`Error onreadystatechange ${xhr.status}`));
+    //   }
+    // };
 
     xhr.open(options.method, options.url);
     xhr.send();

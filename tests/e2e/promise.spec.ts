@@ -15,7 +15,7 @@ describe('Helper', () => {
 
   it('retry[rejects]', async () => {
     const handler = new HandlerWidthThrow(5);
-    await expect(PromiseRetry(()=>handler.call(), 1)).rejects.toThrowError('reject');;
+    await expect(PromiseRetry(()=>handler.call(), 1)).rejects.toThrowError('reject');
   });
 
   it('retry[resolve]', async () => {
@@ -26,7 +26,7 @@ describe('Helper', () => {
   it('retry[rejects callback]', async () => {
     const mockCallback = jest.fn();
     const handler = new HandlerWidthThrow(5);
-    await expect(PromiseRetry(()=>handler.call(), 6, mockCallback)).resolves.toBe('ok');;
+    await expect(PromiseRetry(()=>handler.call(), 6, mockCallback)).resolves.toBe('ok');
     expect(mockCallback.mock.calls.length).toBe(5);
   });
 
