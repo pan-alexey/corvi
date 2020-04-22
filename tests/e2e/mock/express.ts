@@ -16,18 +16,20 @@ app.use(function(req, res, next) {
 });
 
 app.get("/", (req, res) => {
-  res.status(200).send("/root/");
+  res.status(200).send("ok");
 });
 
-app.get("/400", (req, res) => {
-  res.status(400).send("Hello World!");
+app.get("/code/:code", (req, res) => {
+  const code: number = parseInt(req.params.code);
+  res.status(code).send("ok");
 });
+
 
 app.get("/timeout/:ms", async (req, res) => {
   const ms: number = parseInt(req.params.ms);
   await sleep(ms);
 
-  res.status(200).send('ok');
+  res.status(200).send(`timeout ${ms}`);
 });
 
 export default app;
