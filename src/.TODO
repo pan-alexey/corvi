@@ -152,5 +152,5 @@ corvi.options = {
   decompress: true // default
 }
 
-corvi.request.use(requestInterceptor, requestCallback)
-corvi.response.use(responseInterceptor, responseCallback)
+corvi.request.use(requestInterceptor, responseErrorHandler)
+corvi.response.use(responseInterceptor, responseErrorHandler)
