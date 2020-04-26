@@ -35,7 +35,7 @@ export interface IOptions {
 export interface IClient {
     (options: IRequest): {
         promise: Promise<IResponse>;
-        abort: () => void;
+        abort: (err: Error) => void;
     };
 }
 export interface IClientOptions extends IOptions {

@@ -16,7 +16,7 @@ export const PromiseRetry:
             rejectCallback(err);
           }
           if (--attempt > 0) {
-            PromiseRetry(promise, attempt, rejectCallback).then(resolve);
+            PromiseRetry(promise, attempt, rejectCallback);
           } else {
             reject(err);
           }

@@ -3,8 +3,7 @@ import { IResponse, IClient } from '../interface/client';
 
 
 const client: IClient = (options) => {
-  console.log(options);
-  
+  // console.log(options);
   let abort = (): void => {};
   const promise = new Promise<IResponse> ((resolve, reject) => {
     const xhr: XMLHttpRequest = new XMLHttpRequest();
@@ -20,8 +19,8 @@ const client: IClient = (options) => {
 
     xhr.timeout =  options.timeout && options.timeout > 0 ? options.timeout : 120000;
     xhr.ontimeout = (): void => {
-      abort = (): void => {};
       reject(new Error(`Client timeout: ${xhr.timeout}ms`));
+      abort = (): void => {};
     };
 
     xhr.onload = (): void => {

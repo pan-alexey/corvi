@@ -2,7 +2,9 @@ import app from './mock/express';
 import http from 'http';
 import getPort from 'get-port';
 
-import { PromiseTimeout } from '../../src/core/helpers/promise';
+import HandlerWidthThrow from './mock/throw';
+
+import { PromiseTimeout, PromiseRetry } from '../../src/core/helpers/promise';
 import xhr from '../../src/client/xhr';
 
 describe("XHR", () => {
@@ -25,30 +27,22 @@ describe("XHR", () => {
     server.close(done);
   });
 
-  test("[resolve] simple", async () => {
+  test("[rejects] client timeout", async () => {
     const timeout = 500;
-    const {promise} = xhr({method: 'GET', url: `${url}/timeout/${timeout*2}`, timeout});
+    const {promise} = xhr({method: 'GET', url: `${url}/timeout/${timeout*4}`, timeout});
     await expect(promise).rejects.toThrowError(`Client timeout: ${timeout}ms`);
   });
 
-  // test("[resolve] delay", async () => {
-  //   const timeout = 1000;
-  //   // const serverTimeout: number = parseInt( timeout / 2 );
-  //   const result = await xhr({method: 'GET', url: `${url}/timeout/${timeout}`, timeout: timeout * 2});
 
-  //   console.log(result);
-  //   //await expect(xhr({method: 'GET', url: `${url}/timeout/${serverTimeout}`, timeout})).toBe(serverTimeout);
-  //   expect(1).toBe(1);
+  // it('retry[rejects]', async () => {
+  //   const call = (): Promise<string> => {
+  //     return new Promise((resolve, reject)=>{
+  //        reject(new Error(`reject call`));
+  //        resolve('ok');
+  //     });
+  //  };
+
+  //   await expect(PromiseRetry(()=>call(), 2)).rejects.toThrowError('reject');
   // });
 
-  // test("[rejects] common timeout", async () => {
-  //   const timeout = 1000;
-  //   const serverTimeout = timeout * 2;
-  //   await expect(xhr({method: 'GET', url: `${url}/timeout/${serverTimeout}`, timeout})).rejects.toThrowError(`Common timeout: ${timeout}ms`);
-  // });
-
-  // test("[rejects] client timeout", async () => {
-  //   const xhrTimeout = 60000; // default client timeout
-  //   await expect(xhr({method: 'GET', url: `${url}/timeout/${xhrTimeout * 2}`})).rejects.toThrowError(`Client timeout: ${xhrTimeout}ms`);
-  // });
 });

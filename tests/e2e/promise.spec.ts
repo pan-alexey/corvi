@@ -30,6 +30,12 @@ describe('Helper', () => {
     expect(mockCallback.mock.calls.length).toBe(5);
   });
 
+  it('retry[rejects callback]', async () => {
+    const mockCallback = jest.fn();
+    const handler = new HandlerWidthThrow(5);
+    await expect(PromiseRetry(()=>handler.call(), 4, mockCallback)).rejects.toThrowError('reject');
+  });
+
   it('timeout [resolve ]', async () => {
     await expect(PromiseTimeout(() => {
       return new Promise((resolve) => {
