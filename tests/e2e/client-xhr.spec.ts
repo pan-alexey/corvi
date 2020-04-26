@@ -2,6 +2,7 @@ import app from './mock/express';
 import http from 'http';
 import getPort from 'get-port';
 
+import { PromiseTimeout } from '../../src/core/helpers/promise';
 import xhr from '../../src/client/xhr';
 
 describe("XHR", () => {
@@ -25,9 +26,9 @@ describe("XHR", () => {
   });
 
   test("[resolve] simple", async () => {
-    const result = await xhr({method: 'GET', url: `${url}/`});
-
-    expect('ok').toBe('ok');
+    const timeout = 500;
+    const {promise} = xhr({method: 'GET', url: `${url}/timeout/${timeout*2}`, timeout});
+    await expect(promise).rejects.toThrowError(`Client timeout: ${timeout}ms`);
   });
 
   // test("[resolve] delay", async () => {

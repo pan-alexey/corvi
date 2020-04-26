@@ -1,49 +1,52 @@
 import {
-  IOptions,
+  IRequest,
+  // IOptions,
   IClient,
-} from '../interface';
+  //IResponse,
+  IClientOptions,
+} from '../interface/client';
 
-import {
-  PromiseTimeout,
-  PromiseRetry,
-} from './helpers/promise';
+import {UrlBuilder, IUrlBuilder} from './helpers/url';
+// import {
+//   PromiseTimeout,
+//   PromiseRetry,
+// } from './helpers/promise';
 
 interface ICore {
   version: string;
-  client: (options:IOptions) => Promise<string>;
+  //request?: (options:IRequest) => Promise<IResponse>;
+  request?: (options:IRequest) => string;
+  urlBuilder: (url?: string) => IUrlBuilder;
 }
 
 class Core implements ICore {
   version = '0.1';
-
-  private _client: IClient;
-
-  public options: IOptions = {
-    url: '/',
-    method: 'GET',
-    attemps: 1000,
-    timeout: 1000,
+  private client: IClient;
+  public options: IClientOptions = {
+    client: this.client,
   };
 
   constructor(client: IClient) {
-    this._client = client;
+    this.client = client;
   }
 
-  client(options:IOptions): Promise<string> {
-    const _options = Object.assign({}, this.options, options);
-    const attemps: number = _options.attemps || 0;
-    const clientTimeout: number = _options.clientTimeout || 0;
-
-    const client = attemps > 0 ? PromiseRetry( () => {
-      return this._client(_options);
-    }, attemps) : this._client(_options);;
-
-    return clientTimeout ? PromiseTimeout (()=>{
-      return client;
-    }, clientTimeout) : client;
+  urlBuilder(url?: string): IUrlBuilder {
+    return new UrlBuilder(url);
   }
 
-  
+  request(options:IRequest) : string{
+    const clientOptions: IClientOptions = Object.assign({}, this.options, options);
+
+    const url: IUrlBuilder = new UrlBuilder(clientOptions.baseURL);
+
+    console.log(url);
+    console.log(clientOptions.baseURL);
+
+    const reuestOptions: IRequest = Object.assign({}, options);
+
+    console.log(reuestOptions);
+    return 'string';
+  }
 }
 
 export default Core;

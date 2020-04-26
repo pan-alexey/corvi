@@ -1,27 +1,33 @@
-import { IOptions } from '../interface';
+/* eslint-disable @typescript-eslint/no-empty-function */
+import { IResponse, IClient } from '../interface/client';
 
-const client = (options: IOptions): Promise<string> => {
-  return new Promise<string> ((resolve, reject) => {
-    const xhr:XMLHttpRequest = new XMLHttpRequest();
-    let timeout: number;
 
-    if (options.timeout) {
-      setTimeout(()=>{
-        reject(new Error(`Common timeout: ${options.timeout}ms`));
-        xhr.abort();
-      }, options.timeout);
-    }
+const client: IClient = (options) => {
+  console.log(options);
+  
+  let abort = (): void => {};
+  const promise = new Promise<IResponse> ((resolve, reject) => {
+    const xhr: XMLHttpRequest = new XMLHttpRequest();
+    const response: IResponse = {
+      ok: true,
+      status: 200,
+      statusText: 'string',
+      data: "string",
+      headers: "string",
+      elapsed: 0,
+      attemps: 0,
+    };
 
-    // Default timeout in chrome is 120000 (divide by 2)
-    xhr.timeout = Math.max( options.timeout|| 0, 120000/2);
+    xhr.timeout =  options.timeout && options.timeout > 0 ? options.timeout : 120000;
     xhr.ontimeout = (): void => {
-      clearTimeout(timeout);
+      abort = (): void => {};
       reject(new Error(`Client timeout: ${xhr.timeout}ms`));
     };
 
     xhr.onload = (): void => {
-      clearTimeout(timeout);
-      resolve(xhr.responseText);
+      abort = (): void => {};
+      response.data = xhr.responseText;
+      resolve(response);
     };
 
     // reject for http request
@@ -31,10 +37,13 @@ const client = (options: IOptions): Promise<string> => {
     //     reject(new Error(`Error onreadystatechange ${xhr.status}`));
     //   }
     // };
-
+    abort = (): void => {
+      xhr.abort();
+    };
     xhr.open(options.method, options.url);
     xhr.send();
   });
+  return {promise, abort};
 };
 
 export default client;

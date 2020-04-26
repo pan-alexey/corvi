@@ -1,13 +1,16 @@
-import { IOptions, IClient } from '../interface';
+import { IRequest, IClient, IClientOptions } from '../interface/client';
+import { IUrlBuilder } from './helpers/url';
 interface ICore {
     version: string;
-    client: (options: IOptions) => Promise<string>;
+    request?: (options: IRequest) => string;
+    urlBuilder: (url?: string) => IUrlBuilder;
 }
 declare class Core implements ICore {
     version: string;
-    private _client;
-    options: IOptions;
+    private client;
+    options: IClientOptions;
     constructor(client: IClient);
-    client(options: IOptions): Promise<string>;
+    urlBuilder(url?: string): IUrlBuilder;
+    request(options: IRequest): string;
 }
 export default Core;

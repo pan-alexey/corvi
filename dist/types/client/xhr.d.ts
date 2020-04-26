@@ -1,3 +1,3 @@
-import { IOptions } from '../interface';
-declare const client: (options: IOptions) => Promise<string>;
+import { IClient } from '../interface/client';
+declare const client: IClient;
 export default client;
