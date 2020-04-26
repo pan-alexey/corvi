@@ -15,11 +15,11 @@ export const PromiseRetry:
           if (rejectCallback) {
             rejectCallback(err);
           }
-          if (--attempt > 0) {
-            PromiseRetry(promise, attempt, rejectCallback);
-          } else {
+          if (attempt < 0) {
             reject(err);
+            return;
           }
+          PromiseRetry(promise, attempt - 1, rejectCallback).then(resolve, reject);
         });
     });
   };
