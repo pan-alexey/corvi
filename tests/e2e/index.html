@@ -10,9 +10,11 @@
 <script src="../../dist/index.js"></script>
 <script>
 (async function (){
-  const result = await corvi.client({method: 'GET', url: 'https://node.vxv.me/?rnd=5'});
+  const instanse = corvi.create();
+  instanse.options.baseURL = '1';
+  corvi.options.baseURL = '2';
 
-  console.log(result);
+  console.log(corvi.options, instanse.options);
 })();
 </script>
 </html>
