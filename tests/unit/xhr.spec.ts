@@ -32,17 +32,4 @@ describe("XHR", () => {
     const {promise} = xhr({method: 'GET', url: `${url}/timeout/${timeout*4}`, timeout});
     await expect(promise).rejects.toThrowError(`Client timeout: ${timeout}ms`);
   });
-
-
-  // it('retry[rejects]', async () => {
-  //   const call = (): Promise<string> => {
-  //     return new Promise((resolve, reject)=>{
-  //        reject(new Error(`reject call`));
-  //        resolve('ok');
-  //     });
-  //  };
-
-  //   await expect(PromiseRetry(()=>call(), 2)).rejects.toThrowError('reject');
-  // });
-
 });
