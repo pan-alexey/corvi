@@ -9,23 +9,22 @@ const sleep: (timeout: number) => Promise<unknown> = (timeout) => {
   });
 };
 
-app.use(function(req, res, next) {
+app.get("/", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
-app.get("/", (req, res) => {
   res.status(200).send("ok");
 });
-
 app.get("/code/:code", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   const code: number = parseInt(req.params.code);
   res.status(code).send("ok");
 });
 
 
 app.get("/timeout/:ms", async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   const ms: number = parseInt(req.params.ms);
   await sleep(ms);
 

@@ -1,11 +1,10 @@
 module.exports = {
   roots: [
     '<rootDir>/src',
-    '<rootDir>/tests/e2e',
+    '<rootDir>/tests/unit',
   ],
   modulePathIgnorePatterns: [
-    "<rootDir>/tests/package",
-    '<rootDir>/tests/e2e/server',
+    '<rootDir>/tests/e2e',
     'mock',
   ],
   transform: {

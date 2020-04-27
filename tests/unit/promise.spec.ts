@@ -2,7 +2,7 @@
 import { PromiseSleep, PromiseRetry, PromiseTimeout} from '../../src/core/helpers/promise';
 import HandlerWidthThrow from './mock/throw';
 
-describe('Helper', () => {
+describe('promise', () => {
   it('sleep', async() => {
     const timeout = 1000;
     const start:number = new Date().valueOf();
@@ -13,55 +13,74 @@ describe('Helper', () => {
     expect( (end - start) >= 1000).toBe(true);
   });
 
-  it('retry[rejects]', async () => {
-    const handler = new HandlerWidthThrow(5);
-    await expect(PromiseRetry(()=>handler.call(), 1)).rejects.toThrowError('reject');
-  });
-
-  it('retry[resolve]', async () => {
-    const handler = new HandlerWidthThrow(5);
-    await expect(PromiseRetry(()=>handler.call(), 6)).resolves.toBe('ok');;
-  });
-
-  it('retry[resolve callback]', async () => {
+  it('promise retry [resolve]', async () => {
     const mockCallback = jest.fn();
-    const handler = new HandlerWidthThrow(5);
-    await expect(PromiseRetry(()=>handler.call(), 6, mockCallback)).resolves.toBe('ok');
-    expect(mockCallback.mock.calls.length).toBe(5);
+    const attemps = 5;
+    const handler = new HandlerWidthThrow(attemps);
+    await expect(PromiseRetry(()=>handler.call(), attemps, mockCallback)).resolves.toBe('ok');
+    expect(mockCallback.mock.calls.length).toBe(attemps);
   });
 
-  it('retry[rejects callback]', async () => {
+  it('promise retry + 1 [resolve]', async () => {
     const mockCallback = jest.fn();
-    const handler = new HandlerWidthThrow(5);
-    await expect(PromiseRetry(()=>handler.call(), 2, mockCallback)).rejects.toThrowError('reject');
+    const attemps = 5;
+    const handler = new HandlerWidthThrow(attemps);
+    await expect(PromiseRetry(()=>handler.call(), attemps + 1, mockCallback)).resolves.toBe('ok');
+    expect(mockCallback.mock.calls.length).toBe(attemps);
   });
 
-  it('timeout [resolve ]', async () => {
+  it('promise retry 0 [resolve]', async () => {
+    const mockCallback = jest.fn();
+    const attemps = 5;
+    const promise: Promise<string> = new Promise((resolve) => resolve('promise retry 0 [resolve]'));
+    await expect(PromiseRetry(()=> promise, attemps, mockCallback)).resolves.toBe('promise retry 0 [resolve]');
+    expect(mockCallback.mock.calls.length).toBe(0);
+  });
+
+  it('promise retry + 1 [resolve]', async () => {
+    const mockCallback = jest.fn();
+    const attemps = 5;
+    const handler = new HandlerWidthThrow(attemps);
+    await expect(PromiseRetry(()=>handler.call(), attemps + 1, mockCallback)).resolves.toBe('ok');
+    expect(mockCallback.mock.calls.length).toBe(attemps);
+  });
+
+  it('promise retry [rejects]', async () => {
+    const mockCallback = jest.fn();
+    const attemps = 5;
+    const promise: Promise<string> = new Promise((resolve, reject) => {reject(new Error('promise retry [rejects]')); });
+    await expect(PromiseRetry(()=>promise, attemps, mockCallback)).rejects.toThrowError('reject');
+    expect(mockCallback.mock.calls.length).toBe(attemps + 1);
+  });
+
+  it('promise retry [rejects]', async () => {
+    const mockCallback = jest.fn();
+    const attemps = 0;
+    const promise: Promise<string> = new Promise((resolve, reject) => {reject(new Error('promise retry [rejects]')); });
+    await expect(PromiseRetry(()=>promise, attemps, mockCallback)).rejects.toThrowError('reject');
+    expect(mockCallback.mock.calls.length).toBe(attemps + 1);
+  });
+
+  it('promise timeout [resolve]', async () => {
+    const timeout = 1000;
     await expect(PromiseTimeout(() => {
       return new Promise((resolve) => {
         setTimeout(()=>{
           resolve('ok');
-        }, 500);
+        }, timeout/2);
       });
-    }, 1000)).resolves.toBe('ok');;
+    }, timeout)).resolves.toBe('ok');
   });
 
-  it('timeout [rejects timeout]', async () => {
+  it('promise timeout [resolve]', async () => {
+    const timeout = 1000;
     await expect(PromiseTimeout(() => {
       return new Promise((resolve) => {
         setTimeout(()=>{
           resolve('ok');
-        }, 1500);
+        }, timeout*2);
       });
-    }, 1000)).rejects.toThrowError('Timeout: 1000ms');;
-  });
-
-  it('timeout [rejects timeout]', async () => {
-    await expect(PromiseTimeout(() => {
-      return new Promise((resolve, reject) => {
-        reject(new Error('reject'));
-      });
-    }, 1000)).rejects.toThrowError('reject');;
+    }, timeout)).rejects.toThrowError(`Promise Timeout: ${timeout}ms`);
   });
 
 });
