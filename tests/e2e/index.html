@@ -10,11 +10,19 @@
 <script src="../../dist/index.js"></script>
 <script>
 (async function (){
-  const instanse = corvi.create();
-  instanse.options.baseURL = '1';
-  corvi.options.baseURL = '2';
+  // const instanse = corvi.create();
+  // instanse.options.baseURL = '1';
+  // corvi.options.baseURL = '2';
+  // console.log(corvi._client, instanse.options);
 
-  console.log(corvi.options, instanse.options);
+  const client = corvi._client;
+
+  client({
+    method: 'GET',
+    url: 'http://www.example.com',
+    withCredentials: true
+  })
+
 })();
 </script>
 </html>

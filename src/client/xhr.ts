@@ -6,7 +6,8 @@ const client: IClient = (options) => {
   // console.log(options);
   let abort = (): void => {};
   const promise = new Promise<IResponse> ((resolve, reject) => {
-    const xhr: XMLHttpRequest = new XMLHttpRequest();
+    // const xhr: XMLHttpRequest = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest(); //  ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
     const response: IResponse = {
       ok: true,
       status: 200,
@@ -14,10 +15,9 @@ const client: IClient = (options) => {
       data: "string",
       headers: "string",
       elapsed: 0,
-      attemps: 0,
     };
 
-    xhr.timeout =  options.timeout && options.timeout > 0 ? options.timeout : 120000;
+    // xhr.timeout =  options.timeout && options.timeout > 0 ? options.timeout : 120000;
     xhr.ontimeout = (): void => {
       reject(new Error(`Client timeout: ${xhr.timeout}ms`));
       abort = (): void => {};
@@ -29,6 +29,8 @@ const client: IClient = (options) => {
       resolve(response);
     };
 
+
+
     // reject for http request
     // xhr.onreadystatechange = (): void => {
     //   clearTimeout(timeout);
@@ -39,7 +41,8 @@ const client: IClient = (options) => {
     abort = (): void => {
       xhr.abort();
     };
-    xhr.open(options.method, options.url);
+    xhr.open(options.method, options.url, true);
+    xhr.withCredentials = true;
     xhr.send();
   });
   return {promise, abort};

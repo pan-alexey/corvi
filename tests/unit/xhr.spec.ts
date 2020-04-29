@@ -30,9 +30,10 @@ describe("XHR", () => {
   test('dummy', ()=>{
     expect(1).toBe(1);
   });
-  // test("[rejects] client timeout", async () => {
-  //   const timeout = 500;
-  //   const {promise} = xhr({method: 'GET', url: `${url}/timeout/${timeout*4}`, timeout});
-  //   await expect(promise).rejects.toThrowError(`Client timeout: ${timeout}ms`);
-  // });
+
+  test("[rejects] client timeout", async () => {
+    const timeout = 500;
+    const {promise} = xhr({method: 'GET', url: `${url}/timeout/${timeout*4}`, timeout});
+    await expect(promise).rejects.toThrowError(`Client timeout: ${timeout}ms`);
+  });
 });

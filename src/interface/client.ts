@@ -62,5 +62,4 @@ export interface IResponse {
   data: string;
   headers: string;
   elapsed: number;
-  attemps: number;
 }

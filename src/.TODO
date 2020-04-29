@@ -154,3 +154,9 @@ corvi.options = {
 
 corvi.request.use(requestInterceptor, responseErrorHandler)
 corvi.response.use(responseInterceptor, responseErrorHandler)
+
+
+
+
+
+RENAME to corsar
