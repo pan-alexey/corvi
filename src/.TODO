@@ -1,6 +1,12 @@
 timeout in client, because timeout can handle abort
 clientTimeout - is a helpers
 
+
+{data, error} => await get(url, param)
+
+// when need promise
+get(url, param, ?rejected) => classic Promise
+
 // default options
 corvi.options = {
   // `url` is the server URL that will be used for the request

@@ -35,9 +35,6 @@ export const PromiseTimeout:
       clearTimeout(timeout);
       resolve(e);
     })
-    .catch((err)=>{
-      clearTimeout(timeout);
-      reject(err);
-    });
+    .catch(reject);
   });
 };
