@@ -2,10 +2,10 @@ import app from '../mock/express';
 import http from 'http';
 import getPort from 'get-port';
 
-import HandlerWidthThrow from '../mock/throw';
+// import HandlerWidthThrow from '../mock/throw';
 
-import { PromiseTimeout, PromiseRetry } from '../../src/core/helpers/promise';
-import xhr from '../../src/client/xhr';
+// import { PromiseTimeout, PromiseRetry } from '../../src/helpers/promise';
+// import xhr from '../../src/client/xhr';
 
 describe("XHR", () => {
 

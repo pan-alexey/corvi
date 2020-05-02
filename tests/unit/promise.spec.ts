@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { PromiseSleep, PromiseRetry, PromiseTimeout} from '../../src/core/helpers/promise';
+import { PromiseSleep, PromiseRetry, PromiseTimeout} from '../../src/helpers/promise';
 import HandlerWidthThrow from '../mock/throw';
 
 describe('promise', () => {

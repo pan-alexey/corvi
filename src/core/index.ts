@@ -6,7 +6,7 @@ import {
   IClientOptions,
 } from '../interface/client';
 
-import {UrlBuilder, IUrlBuilder} from './helpers/url';
+import {UrlBuilder, IUrlBuilder} from '../helpers/url';
 // import {
 //   PromiseTimeout,
 //   PromiseRetry,

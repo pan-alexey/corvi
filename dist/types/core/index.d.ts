@@ -1,5 +1,5 @@
 import { IRequest, IClient, IClientOptions } from '../interface/client';
-import { IUrlBuilder } from './helpers/url';
+import { IUrlBuilder } from '../helpers/url';
 interface ICore {
     version: string;
     request?: (options: IRequest) => string;
