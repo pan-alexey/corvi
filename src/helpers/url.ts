@@ -1,35 +1,26 @@
 /* eslint-disable no-useless-escape */
 
-// document.URL
-// 
-
-
 export interface IUrlBuilder {
   encode: (url:string) => string;
   toString: () => string;
   match: (url: string) => void;
 }
 
+export interface IUrl {
+  protocol?: string;
+  username?: string;
+  password?: string;
+  hostname?: string;
+  port?: string;
+  path?: string;
+  query?: string;
+  hash?: string;
+}
+
 export class UrlBuilder implements IUrlBuilder {
   private url = '';
-
-  private baseURL?: string;
-
-  private URI : {
-    protocol?: string,
-    authority?: string,
-    path?: string,
-    query?: {
-      [key: string] : string
-    },
-    hash?: string,
-    authentication?: {
-      login?: string;
-      password?: string;
-    },
-    hostname?: string,
-    port?: string,
-  } = {};
+  private baseURL? : string;
+  private URI : IUrl = {};
 
   private patterns = {
     protocol: '(?:([^:/?#]+):)',
@@ -44,7 +35,7 @@ export class UrlBuilder implements IUrlBuilder {
 
   constructor(baseURL?: string) {
     if (baseURL) {
-      this.baseURL = baseURL;//this.encode(baseURL);
+      this.baseURL = baseURL;
     }
   }
 

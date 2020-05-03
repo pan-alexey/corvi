@@ -17,8 +17,7 @@ const urlBuilder = instanse.urlBuilder('https://vxv.me');
 // console.log(urlBuilder.isAbsolute('vxv.me/query'), 'vxv.me/query');
 // console.log(urlBuilder.isAbsolute('vxv.me'), 'vxv.me');
 
-
-console.log('/a/a.php?a=0&b=2', urlBuilder.match('/a/a.php?a=0&b=2'));
+console.log('ftp://vxv.me/a/a.php?a=0&b=2', urlBuilder.match('ftp://admin:password@127.0.0.1//a/a.php?a=0&b=2'));
 
 //console.log(corvi.options, instanse.options);
 
