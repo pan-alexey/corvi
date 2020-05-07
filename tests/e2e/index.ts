@@ -8,6 +8,10 @@ corvi.options.baseURL = '2';
 
 const urlBuilder = instanse.urlBuilder('https://vxv.me');
 
+
+//console.log(urlBuilder.parse('//vxv.me/a/b/?c=1&b=2#123') );
+
+
 // console.log(urlBuilder.isAbsolute('https://vxv.me'), 'https://vxv.me');
 // console.log(urlBuilder.isAbsolute('//vxv.me'), 'vxv.me');
 // console.log(urlBuilder.isAbsolute('//vxv.me/query'), '//vxv.me/query');
@@ -17,7 +21,7 @@ const urlBuilder = instanse.urlBuilder('https://vxv.me');
 // console.log(urlBuilder.isAbsolute('vxv.me/query'), 'vxv.me/query');
 // console.log(urlBuilder.isAbsolute('vxv.me'), 'vxv.me');
 
-console.log('ftp://vxv.me/a/a.php?a=0&b=2', urlBuilder.match('ftp://admin:password@127.0.0.1//a/a.php?a=0&b=2'));
+// console.log('ftp://vxv.me/a/a.php?a=0&b=2', urlBuilder.match('ftp://admin:password@127.0.0.1//a/a.php?a=0&b=2'));
 
 //console.log(corvi.options, instanse.options);
 

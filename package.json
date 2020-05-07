@@ -5,8 +5,8 @@
   "main": "./dist/index.js",
   "types": "./dist/types/index.d.ts",
   "scripts": {
-    "build": "babel dist --out-file dist/legacy.js",
-    "dev": "webpack",
+    "babel": "babel dist --out-file dist/legacy.js",
+    "dev": "webpack --watch",
     "lint:fix": "eslint \"src/**/*.ts\" --quiet --fix",
     "test": "jest --coverage"
   },

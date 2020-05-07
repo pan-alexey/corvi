@@ -1,26 +1,28 @@
 /* eslint-disable no-useless-escape */
 
-export interface IUrlBuilder {
-  encode: (url:string) => string;
-  toString: () => string;
-  match: (url: string) => void;
-}
+
 
 export interface IUrl {
-  protocol?: string;
-  username?: string;
-  password?: string;
-  hostname?: string;
-  port?: string;
-  path?: string;
-  query?: string;
-  hash?: string;
+  protocol: string;
+  username: string;
+  password: string;
+  hostname: string;
+  port: string;
+  path: string;
+  query: string;
+  hash: string;
+}
+
+export interface IUrlBuilder {
+  encode: (url:string) => string;
+  parse: (url: string) => void;
+  resolve: (from: string, to?: string) => string;
+  combineURLs: (baseURL: string, relativeURL: string) => string;
+  combinePath: (basePath: string, relativePath: string) => string;
 }
 
 export class UrlBuilder implements IUrlBuilder {
-  private url = '';
-  private baseURL? : string;
-  private URI : IUrl = {};
+  private baseURL?: string;
 
   private patterns = {
     protocol: '(?:([^:/?#]+):)',
@@ -34,12 +36,72 @@ export class UrlBuilder implements IUrlBuilder {
   };
 
   constructor(baseURL?: string) {
+    this.baseUrl(baseURL);
+  }
+
+  baseUrl(baseURL?: string): void {
     if (baseURL) {
       this.baseURL = baseURL;
     }
   }
 
-  encode: (str: string) => string = (str) => {
+  resolve(from: string, to?: string): string {
+    if (to) {
+      return this.combineURLs(from, to);
+    }
+    
+    if (this.baseURL){
+      return this.combineURLs(this.baseURL, from);
+    }
+
+    return from;
+  }
+
+  combineURLs(baseURL: string, relativeURL: string): string {
+    const baseUri: IUrl = this.parse(baseURL);
+    const relativeUri: IUrl = this.parse(relativeURL);
+
+    if (relativeUri.hostname) {
+      return relativeURL;
+    }
+
+    if (!relativeUri.path) {
+      return baseURL;
+    }
+
+    baseUri.path = this.combinePath(baseUri.path, relativeUri.path);
+
+    return this.decodeUri(baseUri);
+  }
+
+  combinePath(basePath: string, relativePath: string): string {
+    const base: Array<string>= basePath.split('/');
+    const relative: Array<string> = relativePath.split('/');
+
+    if( !relative[0] ) return this.normalizePath(relative);
+
+    base.pop();
+    return this.normalizePath(base.concat(relative));
+  }
+
+  normalizePath(path: Array<string>): string {
+    let result!: Array<string>;
+
+    path.forEach( (el: string) => {
+      if (el === '..' && result) {
+        result.pop();
+        return;
+      } 
+      if (!result) {
+        result = [];
+      } 
+      result.push(el);
+    });
+
+    return result !==null ? result.join('/') : '';
+  }
+
+  encode(str: string) : string {
     return str ? encodeURIComponent(str).
       replace(/%40/gi, '@').
       replace(/%3A/gi, ':').
@@ -51,11 +113,43 @@ export class UrlBuilder implements IUrlBuilder {
       replace(/%5D/gi, ']') : str;
   };
 
-  toString:() => string = () =>{
-    return this.url;
+  decodeUri(uri: IUrl): string {
+    let url = '';
+    if (uri.hostname) {
+      if (uri.protocol) {
+        url += uri.protocol + ':';
+      }
+  
+      url += '//';
+
+      if (uri.username && uri.password) {
+        url += uri.username + ':' + uri.password + '@';
+      }
+
+      url += uri.hostname;
+
+      if (uri.port) {
+        url += '+' +uri.port;
+      }
+
+      url += '/';
+    }
+
+    if (uri.path) {
+      url += url ? uri.path[0] === '/' ? uri.path.slice(1): uri.path : uri.path;
+    }
+
+    if (uri.query) {
+      url += uri.query;
+    }
+
+    if (uri.hash) {
+      url += uri.hash;
+    }
+    return url;
   }
 
-  match: (url: string) => void = (url) => {
+  parse(url: string): IUrl {
     const urlRegExp = new RegExp('^' + this.patterns.protocol + '?' + this.patterns.authority + '?' + this.patterns.path + this.patterns.query + '?' + this.patterns.hash + '?');
     const authRegExp = new RegExp('^' + this.patterns.authentication + '?' + this.patterns.hostname + this.patterns.port + '?$');
     const urlMatch = urlRegExp.exec(url) || [];
