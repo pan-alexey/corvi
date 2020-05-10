@@ -1,7 +1,5 @@
 /* eslint-disable no-useless-escape */
 
-
-
 export interface IUrl {
   protocol: string;
   username: string;
@@ -14,15 +12,26 @@ export interface IUrl {
 }
 
 export interface IUrlBuilder {
-  encode: (url:string) => string;
+  // encode: (url:string) => string;
   parse: (url: string) => void;
-  resolve: (from: string, to?: string) => string;
-  combineURLs: (baseURL: string, relativeURL: string) => string;
-  combinePath: (basePath: string, relativePath: string) => string;
+  // resolve: (from: string, to?: string) => string;
+  // combineURLs: (baseURL: string, relativeURL: string) => string;
+  // combinePath: (basePath: string, relativePath: string) => string;
 }
 
 export class UrlBuilder implements IUrlBuilder {
   private baseURL?: string;
+
+  // private patterns = {
+  //   protocol: '(?:([^:/?#]+):)',
+  //   authority: '(?://([^/?#]*))',
+  //   path: '([^?#]*)',
+  //   query: '(\\?[^#]*)',
+  //   hash: '(#.*)',
+  //   authentication: '(?:([^:]*)(?::([^@]*))?@)',
+  //   hostname: '([^:]+)',
+  //   port: '(?::(\\d+))',
+  // };
 
   private patterns = {
     protocol: '(?:([^:/?#]+):)',
@@ -45,108 +54,114 @@ export class UrlBuilder implements IUrlBuilder {
     }
   }
 
-  resolve(from: string, to?: string): string {
-    if (to) {
-      return this.combineURLs(from, to);
-    }
+  // resolve(from: string, to?: string): string {
+  //   if (to) {
+  //     return this.combineURLs(from, to);
+  //   }
     
-    if (this.baseURL){
-      return this.combineURLs(this.baseURL, from);
-    }
+  //   if (this.baseURL){
+  //     return this.combineURLs(this.baseURL, from);
+  //   }
 
-    return from;
-  }
+  //   return from;
+  // }
 
-  combineURLs(baseURL: string, relativeURL: string): string {
-    const baseUri: IUrl = this.parse(baseURL);
-    const relativeUri: IUrl = this.parse(relativeURL);
+  // combineURLs(baseURL: string, relativeURL: string): string {
+  //   const baseUri: IUrl = this.parse(baseURL);
+  //   const relativeUri: IUrl = this.parse(relativeURL);
 
-    if (relativeUri.hostname) {
-      return relativeURL;
-    }
+  //   if (relativeUri.hostname) {
+  //     return relativeURL;
+  //   }
 
-    if (!relativeUri.path) {
-      return baseURL;
-    }
+  //   if (!relativeUri.path) {
+  //     return baseURL;
+  //   }
 
-    baseUri.path = this.combinePath(baseUri.path, relativeUri.path);
+  //   baseUri.path = this.combinePath(baseUri.path, relativeUri.path);
 
-    return this.decodeUri(baseUri);
-  }
+  //   return this.decodeUri(baseUri);
+  // }
 
-  combinePath(basePath: string, relativePath: string): string {
-    const base: Array<string>= basePath.split('/');
-    const relative: Array<string> = relativePath.split('/');
+  // combinePath(basePath: string, relativePath: string): string {
+  //   const base: Array<string>= basePath.split('/');
+  //   const relative: Array<string> = relativePath.split('/');
 
-    if( !relative[0] ) return this.normalizePath(relative);
+  //   if( !relative[0] ) return this.normalizePath(relative);
 
-    base.pop();
-    return this.normalizePath(base.concat(relative));
-  }
+  //   base.pop();
 
-  normalizePath(path: Array<string>): string {
-    let result!: Array<string>;
+  //   console.warn(base.concat(relative));
 
-    path.forEach( (el: string) => {
-      if (el === '..' && result) {
-        result.pop();
-        return;
-      } 
-      if (!result) {
-        result = [];
-      } 
-      result.push(el);
-    });
+  //   return this.normalizePath(base.concat(relative));
+  // }
 
-    return result !==null ? result.join('/') : '';
-  }
+  // normalizePath(path: Array<string>): string {
+  //   let result!: Array<string>;
 
-  encode(str: string) : string {
-    return str ? encodeURIComponent(str).
-      replace(/%40/gi, '@').
-      replace(/%3A/gi, ':').
-      replace(/%24/g, '$').
-      replace(/%2C/gi, ',').
-      replace(/%20/g, '+').
-      replace(/%5B/gi, '[').
-      replace(/%2E/gi, '[').
-      replace(/%5D/gi, ']') : str;
-  };
+  //   path.forEach( (el: string) => {
+  //     if (el === '..' && result) {
+  //       result.pop();
+  //       return;
+  //     } 
+  //     if (!result) {
+  //       result = [];
+  //     } 
+  //     result.push(el);
+  //   });
 
-  decodeUri(uri: IUrl): string {
-    let url = '';
-    if (uri.hostname) {
-      if (uri.protocol) {
-        url += uri.protocol + ':';
-      }
+  //   return result !==null ? result.join('/') : '';
+  // }
+
+  // encode(str: string) : string {
+  //   return str ? encodeURIComponent(str).
+  //     replace(/%40/gi, '@').
+  //     replace(/%3A/gi, ':').
+  //     replace(/%24/g, '$').
+  //     replace(/%2C/gi, ',').
+  //     replace(/%20/g, '+').
+  //     replace(/%5B/gi, '[').
+  //     replace(/%2E/gi, '[').
+  //     replace(/%5D/gi, ']') : str;
+  // };
+
+  // decodeUri(uri: IUrl): string {
+  //   let url = '';
+  //   if (uri.hostname) {
+  //     if (uri.protocol) {
+  //       url += uri.protocol + ':';
+  //     }
   
-      url += '//';
+  //     url += '//';
 
-      if (uri.username && uri.password) {
-        url += uri.username + ':' + uri.password + '@';
-      }
+  //     if (uri.username && uri.password) {
+  //       url += uri.username + ':' + uri.password + '@';
+  //     }
 
-      url += uri.hostname;
+  //     url += uri.hostname;
 
-      if (uri.port) {
-        url += '+' +uri.port;
-      }
+  //     if (uri.port) {
+  //       url += '+' +uri.port;
+  //     }
 
-      url += '/';
-    }
+  //     url += '/';
+  //   }
 
-    if (uri.path) {
-      url += url ? uri.path[0] === '/' ? uri.path.slice(1): uri.path : uri.path;
-    }
+  //   if (uri.path) {
+  //     url += url ? uri.path[0] === '/' ? uri.path.slice(1): uri.path : uri.path;
+  //   }
 
-    if (uri.query) {
-      url += uri.query;
-    }
+  //   if (uri.query) {
+  //     url += uri.query;
+  //   }
 
-    if (uri.hash) {
-      url += uri.hash;
-    }
-    return url;
+  //   if (uri.hash) {
+  //     url += uri.hash;
+  //   }
+  //   return url;
+  // }
+  resolve(source: string, relative: string) : string {
+    return 'str';
   }
 
   parse(url: string): IUrl {

@@ -42,9 +42,9 @@ class Core implements ICore {
     console.log(url);
     console.log(clientOptions.baseURL);
 
-    const reuestOptions: IRequest = Object.assign({}, options);
+    // const reuestOptions: IRequest = Object.assign({}, options);
 
-    console.log(reuestOptions);
+    //console.log(reuestOptions);
     return 'string';
   }
 }

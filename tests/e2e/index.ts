@@ -1,33 +1,81 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import corvi from 'corvi';
+
+// import corvi from 'corvi';
+
+import corvi from '../../src/index';
+import url from 'url';
 
 const instanse = corvi.create();
-instanse.options.baseURL = '1';
-corvi.options.baseURL = '2';
+const urlBuilder = instanse.urlBuilder();
 
-const urlBuilder = instanse.urlBuilder('https://vxv.me');
-
-
-//console.log(urlBuilder.parse('//vxv.me/a/b/?c=1&b=2#123') );
+const uri = urlBuilder.parse('http:\\\\evil-phisher\\foo.html?json="\\"foo\\""#h\\a\\s\\h');
+console.warn(uri);
 
 
-// console.log(urlBuilder.isAbsolute('https://vxv.me'), 'https://vxv.me');
-// console.log(urlBuilder.isAbsolute('//vxv.me'), 'vxv.me');
-// console.log(urlBuilder.isAbsolute('//vxv.me/query'), '//vxv.me/query');
-// console.log(urlBuilder.isAbsolute('ftp://127.0.0.1'), 'ftp://127.0.0.1');
 
-// console.log(urlBuilder.isAbsolute('vxv.me'), 'vxv.me');
-// console.log(urlBuilder.isAbsolute('vxv.me/query'), 'vxv.me/query');
-// console.log(urlBuilder.isAbsolute('vxv.me'), 'vxv.me');
+const from = '//example.com';
+const to = '../x/../';
+// console.log(urlBuilder.resolve(from, to) , ' != ', url.resolve(from, to));
 
-// console.log('ftp://vxv.me/a/a.php?a=0&b=2', urlBuilder.match('ftp://admin:password@127.0.0.1//a/a.php?a=0&b=2'));
+// const show = false;
 
-//console.log(corvi.options, instanse.options);
 
-// (async function (): Promise<any> {
-//   const result: any = await corvi.request({method: 'GET', url: 'http://node.vxv.me'});
+// const paths: Array<string> = [];
+// for (let i = 0; i < 8; i++) {
+//   const arrBin = i.toString(2).split('');
+//   const arrPath = arrBin.map(e => {
+//     if (e === '1') return '..';
+//     return 'x';
+//   });
+//   const path = arrPath.join('/');
 
-//   console.log(result);
-// })();
+//   paths.push(path);
+//   paths.push('/' + path);
+//   paths.push(path + '/');
+// }
 
+// const domains = [
+//   '//example.com/',
+//   '//example.com',
+// ];
+
+// const result:Array<string> = [];
+// domains.forEach(domain=>{
+//   result.push(domain);
+//   paths.forEach((path)=>{
+//     result.push(path);
+//     if(domain[domain.length - 1] === '/' && path[0]==='/') {
+//       result.push(domain + path.slice(-1));
+//     } else if (domain[domain.length - 1] !== '/' && path[0] !=='/') {
+//       result.push(domain + '/' + path);
+//     }
+//   });
+// });
+
+// result.forEach( (check: string, i: number) => {
+//   const from = result[i];
+//   const to = result[result.length - 1 - i];
+//   if(urlBuilder.resolve(from, to) !== url.resolve(from, to)) {
+//     console.log(`[from: ${from}]`, `[to: ${to}]`, `[${urlBuilder.resolve(from, to)} != ${url.resolve(from, to)}]`);
+//   };
+// });
+
+
+// let total = 0;
+// let no = 0;
+// for (let i = 0; i < result.length; i++) {
+//   for (let j = 0; j < result.length; j++) {
+//     total++;
+//     const from = result[i];
+//     const to = result[j];
+//     if(urlBuilder.resolve(from, to) !== url.resolve(from, to)) {
+//       no++;
+//       if (show) {
+//         console.log(`[from: ${from}]`, `[to: ${to}]`, `[${urlBuilder.resolve(from, to)} != ${url.resolve(from, to)}]`);
+//       }
+//     };
+//   }
+// }
+
+// console.log(no/total);
