@@ -1,12 +1,12 @@
-// builder.task()
+// builder.task(function, {timeout, callback})
 
-// builder.competing (like promise.race, but rejected if all promise was reject)
-// builder.paralell([..], callback) // analog allSettled
-// builder.race([..], callback)
-// builder.all([..], callback)
-// builder.failover([..], callback)
-// builder.series([..], callback)
-// builder.collect([..], callback) // Паралельно запускает таски, но вызывет callback в установленном порядке
+// builder.competing([..], {timeout, callback}) (like promise.race, but rejected if all promise was reject)
+// builder.paralell([..], {timeout, callback}) // analog allSettled
+// builder.race([..], {timeout, callback})
+// builder.all([..], {timeout, callback})
+// builder.failover([..], {timeout, callback})
+// builder.series([..], {timeout, callback})
+// builder.collect([..], {timeout, callback}) // Паралельно запускает таски, но вызывет callback в установленном порядке
 
 
 // builder.run([], immutable=false); if immutable = trye, state will clone every
