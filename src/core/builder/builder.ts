@@ -1,15 +1,15 @@
-// builder.competing (like promise.race, but rejected if all promise was reject)
-// builder.paralell // analog allSettled
-// builder.race
-// builder.all
-// builder.failover
+// builder.task()
 
-// builder.series
-// builder.task
+// builder.competing (like promise.race, but rejected if all promise was reject)
+// builder.paralell([..], callback) // analog allSettled
+// builder.race([..], callback)
+// builder.all([..], callback)
+// builder.failover([..], callback)
+// builder.series([..], callback)
+// builder.collect([..], callback) // Паралельно запускает таски, но вызывет callback в установленном порядке
+
 
 // builder.run([], immutable=false); if immutable = trye, state will clone every
-
-
 // default state = [[a],[b],[c [d], e]]
 // index => current task index map for state (Example for [d] return [2,0])
 
