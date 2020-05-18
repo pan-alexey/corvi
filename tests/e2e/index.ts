@@ -4,15 +4,21 @@
 // import corvi from 'corvi';
 
 import corvi from '../../src/index';
-import url from 'url';
+// import url from 'url';
 
 const instanse = corvi.create();
 const urlBuilder = instanse.urlBuilder();
 
-const uri = urlBuilder.parse('http:\\\\evil-phisher\\foo.html?json="\\"foo\\""#h\\a\\s\\h');
+
+const url = '//домен.рф';
+const uri = urlBuilder.parseUri(url);
+
+
+const regexp = /^(?:([^:/?#]+):)?(?:\/\/([^/?#]*))?([^?#]*)(\?[^#]*)?(#.*)?/i;
+
+const urlMatch = regexp.exec(url) || [];
+
 console.warn(uri);
-
-
 
 const from = '//example.com';
 const to = '../x/../';

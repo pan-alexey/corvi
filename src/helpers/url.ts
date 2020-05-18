@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-escape */
 
-export interface IUrl {
+export interface IUri {
   protocol: string;
   username: string;
   password: string;
@@ -12,26 +12,13 @@ export interface IUrl {
 }
 
 export interface IUrlBuilder {
-  // encode: (url:string) => string;
-  parse: (url: string) => void;
-  // resolve: (from: string, to?: string) => string;
-  // combineURLs: (baseURL: string, relativeURL: string) => string;
-  // combinePath: (basePath: string, relativePath: string) => string;
+  parseUri: (url: string) => IUri;
+  decodeUri: (url: IUri) => string;
+  resolve: (source: string, relative: string) => string;
 }
 
 export class UrlBuilder implements IUrlBuilder {
   private baseURL?: string;
-
-  // private patterns = {
-  //   protocol: '(?:([^:/?#]+):)',
-  //   authority: '(?://([^/?#]*))',
-  //   path: '([^?#]*)',
-  //   query: '(\\?[^#]*)',
-  //   hash: '(#.*)',
-  //   authentication: '(?:([^:]*)(?::([^@]*))?@)',
-  //   hostname: '([^:]+)',
-  //   port: '(?::(\\d+))',
-  // };
 
   private patterns = {
     protocol: '(?:([^:/?#]+):)',
@@ -160,17 +147,32 @@ export class UrlBuilder implements IUrlBuilder {
   //   }
   //   return url;
   // }
+
   resolve(source: string, relative: string) : string {
+    const sourceUri = this.parseUri(source);
+    const relativeUri = this.parseUri(relative);
+
+    const uri: IUri = Object.assign({}, sourceUri);
+
     return 'str';
   }
 
-  parse(url: string): IUrl {
+  decodeUri(uri: IUri) : string {
+    return '';
+  }
+
+  parseUri(url: string): IUri {
+
+    // RFC 3986 https://tools.ietf.org/html/rfc3986#page-50
+    const isAbsolute = /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
     const urlRegExp = new RegExp('^' + this.patterns.protocol + '?' + this.patterns.authority + '?' + this.patterns.path + this.patterns.query + '?' + this.patterns.hash + '?');
     const authRegExp = new RegExp('^' + this.patterns.authentication + '?' + this.patterns.hostname + this.patterns.port + '?$');
     const urlMatch = urlRegExp.exec(url) || [];
     const authMatch = urlMatch[2] ? authRegExp.exec(urlMatch[2]) || [] : [];
 
-    return  {
+    console.warn(urlRegExp);
+
+    const uri: IUri = {
       protocol: urlMatch[1] || '',
       username: authMatch[1] || '',
       password: authMatch[2] || '',
@@ -180,5 +182,9 @@ export class UrlBuilder implements IUrlBuilder {
       query: urlMatch[4] || '',
       hash: urlMatch[5] || '',
     };
+
+    uri.protocol = uri.protocol || isAbsolute ? uri.protocol + '://' : uri.protocol;
+
+    return uri;
   }
 }

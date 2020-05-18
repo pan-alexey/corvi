@@ -1,4 +1,4 @@
-export interface IUrl {
+export interface IUri {
     protocol: string;
     username: string;
     password: string;
@@ -9,7 +9,9 @@ export interface IUrl {
     hash: string;
 }
 export interface IUrlBuilder {
-    parse: (url: string) => void;
+    parseUri: (url: string) => IUri;
+    decodeUri: (url: IUri) => string;
+    resolve: (source: string, relative: string) => string;
 }
 export declare class UrlBuilder implements IUrlBuilder {
     private baseURL?;
@@ -17,5 +19,6 @@ export declare class UrlBuilder implements IUrlBuilder {
     constructor(baseURL?: string);
     baseUrl(baseURL?: string): void;
     resolve(source: string, relative: string): string;
-    parse(url: string): IUrl;
+    decodeUri(uri: IUri): string;
+    parseUri(url: string): IUri;
 }
