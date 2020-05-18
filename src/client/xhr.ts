@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+// polyfill for ie
 import { IResponse, IClient } from '../interface/client';
 
 
